@@ -21,15 +21,19 @@
         <activity
             android:label="@string/app_name"
             android:name=".authenticationActivities.LoginActivity">
+        </activity>
+
+        <activity android:name=".authenticationActivities.CreateAccountActivity" />
+        <activity android:name=".authenticationActivities.ForgotPasswordActivity" />
+        <activity android:name=".authenticationActivities.VerifyEmailActivity" />
+        <activity android:name=".createGameActivities.CreateGameActivity" />
+        <activity android:name=".mainActivities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".authenticationActivities.CreateAccountActivity" />
-        <activity android:name=".authenticationActivities.ForgotPasswordActivity" />
-        <activity android:name=".authenticationActivities.VerifyEmailActivity" />
     </application>
 
 </manifest>

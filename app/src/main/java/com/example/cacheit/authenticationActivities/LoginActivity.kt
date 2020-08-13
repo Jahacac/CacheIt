@@ -14,6 +14,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cacheit.Firebase
 import com.example.cacheit.R
+import com.example.cacheit.createGameActivities.CreateGameActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -164,11 +165,11 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun updateUI() {
-        /*val intent = if(mAuth!!.currentUser?.isEmailVerified!!) {
-            Intent(this@LoginActivity, MapsActivity::class.java)
+        val intent = if(mAuth!!.currentUser?.isEmailVerified!!) {
+            Intent(this@LoginActivity, CreateGameActivity::class.java)
         } else {
             Intent(this@LoginActivity, VerifyEmailActivity::class.java)
-        }*/
+        }
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
     }

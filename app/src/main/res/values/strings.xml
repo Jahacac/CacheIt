@@ -12,4 +12,15 @@
     <string name="menu_slideshow">Slideshow</string>
 
     <string name="home_second">Home Second</string>
+
+    <string name="red">0.0</string>
+    <string name="orange">30.0F</string>
+    <string name="yellow">60.0F</string>
+    <string name="green">120.0F</string>
+    <string name="cyan">180.0F</string>
+    <string name="azure">210.0F</string>
+    <string name="blue">240.0F</string>
+    <string name="violet">270.0F</string>
+    <string name="magenta">300.0F</string>
+    <string name="rose">330.0F</string>
 </resources>

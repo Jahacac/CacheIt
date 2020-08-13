@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_createGame"
+        android:icon="@drawable/ic_eye"
+        android:title="Create Game"/>
+
+    <item
+        android:id="@+id/navigation_games"
+        android:icon="@drawable/ic_eye"
+        android:title="Games"/>
+
+    <item
+        android:id="@+id/navigation_leaderboard"
+        android:icon="@drawable/ic_eye"
+        android:title="Leaderboard"/>
+
+    <item
+        android:id="@+id/navigation_myProfile"
+        android:icon="@drawable/ic_eye"
+        android:title="my profile"/>
+
+</menu>
