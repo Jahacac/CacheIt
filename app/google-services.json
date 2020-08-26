@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "121184945455",
+    "firebase_url": "https://cacheit-759ee.firebaseio.com",
+    "project_id": "cacheit-759ee",
+    "storage_bucket": "cacheit-759ee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:121184945455:android:b1ee3cd9681580796c0dda",
+        "android_client_info": {
+          "package_name": "com.example.cacheit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "121184945455-ccon2napavcbl35ref7seugjedqsi9kd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKeFLLj4Wi1lPb2RTtaBA2129H1ZSBUYY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "121184945455-ccon2napavcbl35ref7seugjedqsi9kd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

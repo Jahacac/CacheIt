@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.cacheit">
+
+    <uses-feature android:name="android.hardware.camera" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <receiver
+            android:name=".shared.GeofenceBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
+        <!-- Authentication Activities -->
+        <activity
+            android:label="@string/app_name"
+            android:name=".authenticationActivities.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".authenticationActivities.CreateAccountActivity" />
+        <activity android:name=".authenticationActivities.ForgotPasswordActivity" />
+        <activity android:name=".authenticationActivities.VerifyEmailActivity" />
+        <activity android:name=".createGameActivities.CreateGameActivity" />
+        <activity android:name=".gameplayActivities.MyGameplayActivity" />
+        <activity android:name=".myGamesActivities.MyGamesActivity" />
+        <activity android:name=".gamesActivities.AllGamesActivity" />
+        <activity android:name=".mainActivities.MainActivity" />
+
+
+    </application>
+
+</manifest>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:id="@+id/cv_game_details"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="0dp"
+    app:cardCornerRadius="20dp"
+    app:cardPreventCornerOverlap="false"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/game_details_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="#FFFFFF">
+
+        <TextView
+            android:id="@+id/tv_game_details_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/nunito"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:text="Ime igre"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_hint_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/nunito"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:visibility="gone"
+            android:text="HINT:"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_game_details_name" />
+s
+        <TextView
+            android:id="@+id/tv_hint_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:fontFamily="@font/nunito"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:visibility="gone"
+            android:text="Ovo je hint za neku igru! moras ic lijevo pa desno pa lijevo i desno? Kod zutog kamena skrenes lijevo i pogledas desno."
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_hint_title" />
+
+        <TextView
+            android:id="@+id/tv_distance_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/nunito"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:text="Distance:"
+            android:visibility="gone"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_hint_txt" />
+
+        <TextView
+            android:id="@+id/tv_distance_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/nunito"
+            android:textColor="#000000"
+            android:visibility="gone"
+            android:textSize="16sp"
+            android:text="2km"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/tv_distance_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_hint_txt" />
+
+        <TextView
+            android:id="@+id/tv_game_started"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/nunito"
+            android:textColor="#000000"
+            android:gravity="center_horizontal"
+            android:textSize="18dp"
+            android:text="Game started! Happy searching!"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_distance_txt" />
+
+
+        <TextView
+            android:id="@+id/tv_guide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/nunito"
+            android:textColor="#000000"
+            android:textSize="11dp"
+            android:text="* Countdown has started. You can quit the game at any time. In order to complete the game, take a picture of the QR code at the finish line."
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_game_started" />
+
+        <ImageButton
+            android:id="@+id/btn_close_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="10dp"
+            android:background="#00FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_close" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:civ_border_width="1dp"
+            app:civ_border_color="#7E57C2"
+            app:layout_constraintBottom_toBottomOf="@+id/img_game_card"
+            app:layout_constraintEnd_toEndOf="@+id/img_game_card"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/img_game_card"
+            app:layout_constraintTop_toTopOf="@+id/img_game_card"
+            app:layout_constraintVertical_bias="1.0"
+            android:src="#000000" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:id="@+id/cv_game_details"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="0dp"
+    app:cardCornerRadius="20dp"
+    app:cardPreventCornerOverlap="false"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/game_details_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF">
+
+
+        <TextView
+            android:id="@+id/tv_game_details_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/nunito"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:text="Ime igre"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/tv_times_played_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/nunito"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:text="Total:"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_game_details_name" />
+
+        <TextView
+            android:id="@+id/tv_times_played"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/nunito"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:text="64"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/tv_times_played_label"
+            app:layout_constraintTop_toBottomOf="@+id/tv_game_details_name" />
+
+        <TextView
+            android:id="@+id/tv_times_solved_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/nunito"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:text="Finished the game:"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_times_played_label" />
+
+        <TextView
+            android:id="@+id/tv_times_solved"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/nunito"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:text="30"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/tv_times_solved_label"
+            app:layout_constraintTop_toBottomOf="@+id/tv_times_played" />
+
+        <TextView
+            android:id="@+id/tv_times_quit_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/nunito"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:text="Canceled the game:"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_times_solved_label" />
+
+        <TextView
+            android:id="@+id/tv_times_quit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/nunito"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:text="30"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/tv_times_quit_label"
+            app:layout_constraintTop_toBottomOf="@+id/tv_times_solved" />
+
+        <TextView
+            android:id="@+id/tv_rating_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:text="Rating:"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_times_quit_label" />
+
+        <TextView
+            android:id="@+id/tv_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/nunito"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:text="50%"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/tv_rating_label"
+            app:layout_constraintTop_toBottomOf="@+id/tv_times_quit" />
+
+        <Button
+            android:id="@+id/btn_resend_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Resend QR code"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_rating_label" />
+
+        <Button
+            android:id="@+id/btn_action"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Activate"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/btn_resend_email"
+            app:layout_constraintTop_toBottomOf="@+id/tv_rating" />
+
+        <ImageButton
+            android:id="@+id/btn_close_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="10dp"
+            android:background="#00FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_close" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:civ_border_width="1dp"
+            app:civ_border_color="#7E57C2"
+            app:layout_constraintBottom_toBottomOf="@+id/img_game_card"
+            app:layout_constraintEnd_toEndOf="@+id/img_game_card"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/img_game_card"
+            app:layout_constraintTop_toTopOf="@+id/img_game_card"
+            app:layout_constraintVertical_bias="1.0"
+            android:src="#000000" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
