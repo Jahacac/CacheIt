@@ -113,7 +113,7 @@ s
             android:fontFamily="@font/nunito"
             android:textColor="#000000"
             android:textSize="11dp"
-            android:text="* Countdown has started. You can quit the game at any time. In order to complete the game, take a picture of the QR code at the finish line."
+            android:text="* Countdown has begun. You can quit the game at any time. In order to complete the game, take a picture of the QR code at the finish line."
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_game_started" />

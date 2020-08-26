@@ -22,13 +22,10 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.cacheit.Firebase
+import com.example.cacheit.*
 import com.example.cacheit.Firebase.Companion.databaseUsers
 import com.example.cacheit.MailingConfig.GMailSender
 import com.example.cacheit.MailingConfig.SendEmail
-import com.example.cacheit.MyActiveGameplayDataCallback
-import com.example.cacheit.MyGamesDataCallback
-import com.example.cacheit.R
 import com.example.cacheit.gameplayActivities.GameplayCard
 import com.example.cacheit.gameplayActivities.GameplayData
 import com.example.cacheit.gameplayActivities.MyGameplayActivity
@@ -121,6 +118,67 @@ class AllGamesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
 
                 val btnCloseDetails = dialog.findViewById(R.id.btn_close_details) as ImageButton
 
+                val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+                val currentDate = sdf.format(Date())
+
+                var flagExistsGameplay = false;
+                GameplayData.mySavedGameplay.clear()
+                GameplayData.fetchMySavedGameplayData(object : MySavedGameplayDataCallback {
+                    override fun onMySavedGameplayDataCallback(MySavedGameplayData: java.util.ArrayList<GameplayCard>) {
+                        if (GameplayData.mySavedGameplay.size > 0) {
+                            for (savedGame in GameplayData.mySavedGameplay) {
+                                if (savedGame.gameId == GameCard.id) {
+                                    savedGame.active = true
+                                    savedGame.dateStarted = currentDate
+                                    GameplayData.myActiveGameplay = savedGame
+                                    flagExistsGameplay = true
+                                    break
+                                }
+                            }
+                        } else {
+                            val gameplayId = UUID.randomUUID().toString().replace("-", "").toUpperCase(Locale.ROOT)
+                            val dbGame = Firebase.databaseGameplays?.child(gameplayId)
+                            dbGame?.push()
+                            dbGame?.child("gameplayId")?.setValue(gameplayId)
+                            dbGame?.child("gameId")?.setValue(GameCard.id)
+                            dbGame?.child("playerId")?.setValue(mAuth!!.uid)
+                            dbGame?.child("totalTime")?.setValue(0)
+                            dbGame?.child("completed")?.setValue(false)
+                            dbGame?.child("active")?.setValue(true)
+                            dbGame?.child("points")?.setValue(0)
+                            dbGame?.child("dateStarted")?.setValue(currentDate)
+                            dbGame?.child("lat")?.setValue(GameCard.lat)
+                            dbGame?.child("lon")?.setValue(GameCard.lon)
+                            dbGame?.child("name")?.setValue(GameCard.name)
+                            dbGame?.child("hint")?.setValue(GameCard.hint)
+                            dbGame?.child("gameMakerId")?.setValue(GameCard.ownerId)
+                            dbGame?.child("difficulty")?.setValue(GameCard.difficulty)
+                            dbGame?.child("initialDistance")?.setValue(GameCard.difficulty)
+                            flagExistsGameplay = true
+                        }
+                        if (!flagExistsGameplay) {
+                            val gameplayId = UUID.randomUUID().toString().replace("-", "").toUpperCase(Locale.ROOT)
+                            val dbGame = Firebase.databaseGameplays?.child(gameplayId)
+                            dbGame?.push()
+                            dbGame?.child("gameplayId")?.setValue(gameplayId)
+                            dbGame?.child("gameId")?.setValue(GameCard.id)
+                            dbGame?.child("playerId")?.setValue(mAuth!!.uid)
+                            dbGame?.child("totalTime")?.setValue(0)
+                            dbGame?.child("completed")?.setValue(false)
+                            dbGame?.child("active")?.setValue(true)
+                            dbGame?.child("points")?.setValue(0)
+                            dbGame?.child("dateStarted")?.setValue(currentDate)
+                            dbGame?.child("lat")?.setValue(GameCard.lat)
+                            dbGame?.child("lon")?.setValue(GameCard.lon)
+                            dbGame?.child("name")?.setValue(GameCard.name)
+                            dbGame?.child("hint")?.setValue(GameCard.hint)
+                            dbGame?.child("gameMakerId")?.setValue(GameCard.ownerId)
+                            dbGame?.child("difficulty")?.setValue(GameCard.difficulty)
+                            dbGame?.child("initialDistance")?.setValue(GameCard.difficulty)
+                        }
+                    }
+                })
+
                 btnCloseDetails!!.setOnClickListener { v ->
 
                     GameplayData.fetchMyActiveGameplayData(object : MyActiveGameplayDataCallback {
@@ -135,23 +193,6 @@ class AllGamesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
                         }
                     })
                 }
-
-                val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
-                val currentDate = sdf.format(Date())
-
-                val gameplayId = UUID.randomUUID().toString().replace("-", "").toUpperCase(Locale.ROOT)
-                val dbGame = Firebase.databaseGameplays?.child(gameplayId)
-                dbGame?.push()
-                dbGame?.child("gameplayId")?.setValue(gameplayId)
-                dbGame?.child("gameId")?.setValue(GameCard.id)
-                dbGame?.child("playerId")?.setValue(mAuth!!.uid)
-                dbGame?.child("totalTime")?.setValue(0)
-                dbGame?.child("completed")?.setValue(false)
-                dbGame?.child("active")?.setValue(true)
-                dbGame?.child("points")?.setValue(0)
-                dbGame?.child("dateStarted")?.setValue(currentDate)
-                dbGame?.child("lat")?.setValue(GameCard.lat)
-                dbGame?.child("lon")?.setValue(GameCard.lon)
 
                 name.text = GameCard.name
 

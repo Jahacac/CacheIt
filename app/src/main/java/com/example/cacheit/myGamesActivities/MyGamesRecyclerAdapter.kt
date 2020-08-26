@@ -164,38 +164,6 @@ class MyGamesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
                         })
                 }
-
-
-
-                /*println("${Thread.currentThread()} has run.")
-                 thread(start = true) {
-                     println("${Thread.currentThread()} has run.")
-                     databaseUsers?.child(Firebase.auth!!.currentUser!!.uid)?.child("email")
-                         ?.addListenerForSingleValueEvent(object :
-                             ValueEventListener {
-                             override fun onCancelled(p0: DatabaseError) {
-                                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                             }
-
-                             override fun onDataChange(p0: DataSnapshot) {
-                                 val sender = GMailSender(
-                                     "cacheitapp@gmail.com",
-                                     "sandiboss123"
-                                 )
-                                 Log.e("zu sam", "tu sam")
-                                 sender.sendMail(
-                                     subject,
-                                     message,
-                                     "cacheitapp@gmail.com",
-                                     p0.value.toString(),
-                                     file
-                                 )
-                             }
-                         })
-                 }
-                 }*/
-
-
                 dialog.show()
             }
 

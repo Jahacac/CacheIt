@@ -63,9 +63,6 @@ class MainActivity : AppCompatActivity() {
     // current user location
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
-    private var currentLat: Double? = null
-    private var currentLon: Double? = null
-
     private var GEOFENCE_ID = "SOME_GEOFENCE_ID";
     private var FINE_LOCATION_ACCESS_REQUEST_CODE: Int = 10001;
     private var BACKGROUND_LOCATION_ACCESS_REQUEST_CODE: Int = 10002;
@@ -74,6 +71,8 @@ class MainActivity : AppCompatActivity() {
         var activeGameplay = false;
         var mainContext = this;
         internal const val ACTION_GEOFENCE_EVENT = "MainActivity.cacheit.action.ACTION_GEOFENCE_EVENT"
+        var currentLat: Double? = null;
+        var currentLon: Double? = null;
     }
 
     private val geofencePendingIntent: PendingIntent by lazy {
@@ -104,28 +103,6 @@ class MainActivity : AppCompatActivity() {
 
         bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         bottomNavigation.selectedItemId = R.id.navigation_games;
-        GameplayData.fetchMyActiveGameplayData(object : MyActiveGameplayDataCallback {
-            override fun onMyActiveGameplayDataCallback(myGameplayData: GameplayCard) {
-                Log.e("fetching gameplay", myGameplayData.toString())
-                if (myGameplayData.active || activeGameplay) {
-                    toolbar.title = "Gameplay"
-                    Log.e("lala", "otvara se my gameplay")
-                    val myGameplayFragment = MyGameplayActivity.newInstance()
-                    openFragment(myGameplayFragment)
-                    addGeofence()
-
-                } else {
-                    toolbar.title = "Games"
-                    GamesData.fetchAllGamesData(object : AllGamesDataCallback {
-                        override fun onAllGamesDataCallback(AllGamesData: java.util.ArrayList<GameCard>) {
-                            Log.e("lala", "otvara se my gameplay")
-                            val gamesFragment = AllGamesActivity.newInstance()
-                            openFragment(gamesFragment)
-                        }
-                    })
-                }
-            }
-        })
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             Log.e("permission fully, " , "granted")
         }
@@ -179,11 +156,11 @@ class MainActivity : AppCompatActivity() {
         //Log.e("gamelon", gameLon.toString())
         //Log.e("distancehalf", distanceHalf.toString())
 
-        var geofence = geofenceHelper.getGeofence(GEOFENCE_ID, myLat, myLon, distanceHalf, Geofence.GEOFENCE_TRANSITION_DWELL);
+        var geofence = geofenceHelper.getGeofence(GEOFENCE_ID, gameLat, gameLon, distanceHalf, Geofence.GEOFENCE_TRANSITION_DWELL);
         var geofencingRequest = geofenceHelper.getGeofencingRequest(geofence);
         var pendingIntent = geofenceHelper.getPendingIntent();
 
-        geofencingClient.addGeofences(geofencingRequest, geofencePendingIntent)?.run {
+        geofencingClient.addGeofences(geofencingRequest, pendingIntent)?.run {
             addOnCompleteListener {
                     addOnSuccessListener {
                         Toast.makeText(this@MainActivity, "Geofence active!",

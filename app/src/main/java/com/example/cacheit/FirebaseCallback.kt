@@ -16,3 +16,7 @@ interface AllGamesDataCallback {
 interface MyActiveGameplayDataCallback {
     fun onMyActiveGameplayDataCallback(MyGameplayData: GameplayCard)
 }
+
+interface MySavedGameplayDataCallback {
+    fun onMySavedGameplayDataCallback(MySavedGameplayData: ArrayList<GameplayCard>)
+}

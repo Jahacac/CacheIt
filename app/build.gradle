@@ -120,4 +120,7 @@ dependencies {
     // for geofence
     implementation 'com.firebase:geofire-android:3.0.0'
     implementation 'com.karumi:dexter:5.0.0'
+
+    // for QR code scanner
+    implementation 'com.google.android.gms:play-services-vision:19.0.0'
 }

@@ -12,5 +12,10 @@ data class GameplayCard (
     var points: String = "",            //points earned
     var dateStarted: String = "",
     var lat: String = "",
-    var lon: String = ""
+    var lon: String = "",
+    var name: String = "",
+    var hint: String = "",
+    var gameMakerId: String = "",
+    var difficulty: String = "",
+    var initialDistance: String = ""
 )

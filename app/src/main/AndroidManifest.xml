@@ -39,6 +39,7 @@
         <activity android:name=".authenticationActivities.VerifyEmailActivity" />
         <activity android:name=".createGameActivities.CreateGameActivity" />
         <activity android:name=".gameplayActivities.MyGameplayActivity" />
+        <activity android:name=".gameplayActivities.QRcodeScannerActivity" />
         <activity android:name=".myGamesActivities.MyGamesActivity" />
         <activity android:name=".gamesActivities.AllGamesActivity" />
         <activity android:name=".mainActivities.MainActivity" />

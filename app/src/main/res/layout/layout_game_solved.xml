@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:id="@+id/cv_game_solved"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="0dp"
+    app:cardCornerRadius="20dp"
+    app:cardPreventCornerOverlap="false"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/game_solved_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="#FFFFFF">
+
+        <TextView
+            android:id="@+id/tv_congratulations"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/nunito"
+            android:textColor="#000000"
+            android:textSize="25sp"
+            android:text="Congratulations!"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tv_game_details_name" />
+
+        <TextView
+            android:id="@+id/tv_solved"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/nunito"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:text="You solved: "
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_game_details_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_congratulations" />
+
+        <TextView
+            android:id="@+id/tv_game_details_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/nunito"
+            android:textColor="#000000"
+            android:textSize="17sp"
+            android:text="Ime igre"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/tv_solved"
+            app:layout_constraintTop_toBottomOf="@+id/tv_congratulations" />
+
+        <TextView
+            android:id="@+id/tv_mark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/nunito"
+            android:textColor="#000000"
+            android:textSize="17sp"
+            android:text="!"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/tv_game_details_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_congratulations" />
+
+
+        <TextView
+            android:id="@+id/tv_times_played_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/nunito"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:text="Time played:"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_game_details_name" />
+
+        <TextView
+            android:id="@+id/tv_times_played"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/nunito"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:text="64"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/tv_times_played_label"
+            app:layout_constraintTop_toBottomOf="@+id/tv_game_details_name" />
+
+        <TextView
+            android:id="@+id/tv_times_solved_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/nunito"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:text="Points earned:"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_times_played_label" />
+
+        <TextView
+            android:id="@+id/tv_times_solved"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/nunito"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:text="30"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/tv_times_solved_label"
+            app:layout_constraintTop_toBottomOf="@+id/tv_times_played" />
+
+        <TextView
+            android:id="@+id/tv_report_game"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="Would you like to report this game for any reason?"
+            android:textColor="@android:color/background_dark"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_times_solved" />
+
+        <CheckBox
+            android:id="@+id/cb_report_game"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text=" "
+            app:layout_constraintStart_toEndOf="@+id/tv_report_game"
+            app:layout_constraintTop_toBottomOf="@+id/tv_times_solved" />
+
+        <TextView
+            android:id="@+id/tv_game_rating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:gravity="center_horizontal"
+            android:text="Rate this game:"
+            android:textColor="@android:color/background_dark"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_report_game" />
+
+        <RatingBar
+            android:id="@+id/rb_game_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?android:attr/ratingBarStyleIndicator"
+            android:numStars="5"
+            android:stepSize="0.1"
+            app:layout_constraintTop_toBottomOf="@+id/tv_game_rating"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Save my Review"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rb_game_rating" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:civ_border_width="1dp"
+            app:civ_border_color="#7E57C2"
+            app:layout_constraintBottom_toBottomOf="@+id/img_game_card"
+            app:layout_constraintEnd_toEndOf="@+id/img_game_card"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/img_game_card"
+            app:layout_constraintTop_toTopOf="@+id/img_game_card"
+            app:layout_constraintVertical_bias="1.0"
+            android:src="#000000" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

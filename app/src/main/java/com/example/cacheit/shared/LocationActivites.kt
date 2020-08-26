@@ -15,7 +15,7 @@ class LocationActivites {
 
     companion object {
 
-        /*DISTANCE CALCULATOR*/
+        /*DISTANCE CALCULATOR IN KM*/
         public fun distance(
             lat1: Double,
             lon1: Double,
