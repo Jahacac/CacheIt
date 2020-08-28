@@ -3,6 +3,7 @@ package com.example.cacheit
 import java.util.ArrayList
 import com.example.cacheit.gamesActivities.GameCard
 import com.example.cacheit.gameplayActivities.GameplayCard
+import com.example.cacheit.leaderboardActivities.PlayerCard
 
 
 interface MyGamesDataCallback {
@@ -19,4 +20,12 @@ interface MyActiveGameplayDataCallback {
 
 interface MySavedGameplayDataCallback {
     fun onMySavedGameplayDataCallback(MySavedGameplayData: ArrayList<GameplayCard>)
+}
+
+interface MyPlayersDataCallback {
+    fun onMyPlayersDataCallback(MyPlayersDataCallback: ArrayList<PlayerCard>)
+}
+
+interface MyMakersDataCallback {
+    fun onMyMakersDataCallback(MyMakersDataCallback: ArrayList<PlayerCard>)
 }

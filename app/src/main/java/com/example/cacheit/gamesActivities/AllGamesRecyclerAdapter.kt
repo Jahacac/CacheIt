@@ -90,9 +90,11 @@ class AllGamesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
         private val gameImage = itemView.img_game_card
         private val gameName = itemView.tv_game_card_name
         private val btnStartGame = itemView.btn_startGame
+        private val ratingStars = itemView.rb_game_rating
 
         fun bind(GameCard: GameCard) {
             gameName.text = GameCard.name
+            ratingStars.rating = GameCard.rating.toFloat()
 
             btnStartGame!!.setOnClickListener { v ->
                 var mDatabase: FirebaseDatabase? = null

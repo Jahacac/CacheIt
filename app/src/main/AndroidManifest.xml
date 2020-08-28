@@ -43,6 +43,7 @@
         <activity android:name=".myGamesActivities.MyGamesActivity" />
         <activity android:name=".gamesActivities.AllGamesActivity" />
         <activity android:name=".mainActivities.MainActivity" />
+        <activity android:name=".leaderboardActivities.LeaderboardActivity" />
 
 
     </application>

@@ -35,6 +35,9 @@ import com.example.cacheit.gameplayActivities.MyGameplayActivity
 import com.example.cacheit.gamesActivities.AllGamesActivity
 import com.example.cacheit.gamesActivities.GameCard
 import com.example.cacheit.gamesActivities.GamesData
+import com.example.cacheit.leaderboardActivities.LeaderboardActivity
+import com.example.cacheit.leaderboardActivities.PlayerCard
+import com.example.cacheit.leaderboardActivities.PlayerData
 import com.example.cacheit.myGamesActivities.MyGamesActivity
 import com.example.cacheit.shared.GeofenceBroadcastReceiver
 import com.example.cacheit.shared.GeofenceHelper
@@ -217,6 +220,8 @@ class MainActivity : AppCompatActivity() {
                     override fun onMyActiveGameplayDataCallback(myGameplayData: GameplayCard) {
                         Log.e("fetching gameplay", myGameplayData.toString())
                         if (myGameplayData.active || activeGameplay) {
+                            Log.e("gameplaydata", myGameplayData.active.toString())
+                            Log.e("gameplaydata", activeGameplay.toString())
                             toolbar.title = "Gameplay"
                                 Log.e("lala", "otvara se my gameplay")
                                 val myGameplayFragment = MyGameplayActivity.newInstance()
@@ -238,6 +243,21 @@ class MainActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_leaderboard -> {
+                toolbar.title = "Leaderboard"
+                PlayerData.bestMakersData.clear()
+                PlayerData.bestPlayersData.clear()
+                PlayerData.fetchBestPlayersData(object : MyPlayersDataCallback {
+                    override fun onMyPlayersDataCallback(MyPlayersDataCallback: java.util.ArrayList<PlayerCard>) {
+                        PlayerData.fetchBestMakersData(object : MyMakersDataCallback {
+                            override fun onMyMakersDataCallback(MyMakersDataCallback: java.util.ArrayList<PlayerCard>) {
+                                Log.e("lala", "otvara se my leaderbaord")
+                                val leaderboardFragment = LeaderboardActivity.newInstance()
+                                openFragment(leaderboardFragment)
+                            }
+
+                        })
+                    }
+                })
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_myProfile-> {

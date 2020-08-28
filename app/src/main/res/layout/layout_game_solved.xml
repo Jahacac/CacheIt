@@ -167,9 +167,8 @@
             android:id="@+id/rb_game_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="?android:attr/ratingBarStyleIndicator"
             android:numStars="5"
-            android:stepSize="0.1"
+            android:stepSize="0.5"
             app:layout_constraintTop_toBottomOf="@+id/tv_game_rating"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>

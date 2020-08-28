@@ -1,6 +1,7 @@
 package com.example.cacheit.gameplayActivities
 
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +9,9 @@ import android.os.SystemClock
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.Button
 import android.widget.Chronometer
 import android.widget.Chronometer.OnChronometerTickListener
@@ -17,9 +20,13 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.cacheit.R
 import com.example.cacheit.createGameActivities.CreateGameActivity
+import com.example.cacheit.gameplayActivities.GameplayData.Companion.myActiveGameplay
 import com.example.cacheit.mainActivities.MainActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -94,8 +101,69 @@ class MyGameplayActivity : Fragment() {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             activity?.startActivity(intent)
         }
+
+        if ((SystemClock.elapsedRealtime() - meter!!.base)/1000 + GameplayData.myActiveGameplay.totalTime.toFloat() >= 86400.0f) {
+            var btn_report = root?.findViewById<ImageButton>(R.id.btn_report) as ImageButton
+            btn_report.visibility = VISIBLE
+            btn_report!!.setOnClickListener{
+                openReportDialog()
+            }
+        }
     }
 
+    private fun openReportDialog(){
+
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.layout_report_game)
+
+        val btnSave = dialog.findViewById(R.id.btn_save_report) as Button
+        val btnExit = dialog.findViewById(R.id.btn_close_report) as ImageButton
+
+        btnExit!!.setOnClickListener{
+            dialog.dismiss();
+        }
+
+        btnSave!!.setOnClickListener { v ->
+            var mDatabase: FirebaseDatabase? = null
+            mDatabase = FirebaseDatabase.getInstance()
+            val ref = mDatabase!!.getReference("/Games/" + myActiveGameplay.gameId)
+
+            val refGameplay = mDatabase!!.getReference("/Gameplays/" + myActiveGameplay.gameplayId)
+            var timesReported = 0
+            ref.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun onDataChange(p0: DataSnapshot) {
+                    timesReported = p0.child("timesReported").value.toString().toInt()
+                    if (timesReported == 5) {
+                        ref.child("deleted").setValue(true)
+                    }
+                    ref.child("timesReported").setValue((timesReported + 1))
+
+                    refGameplay.addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onCancelled(p0: DatabaseError) {
+                            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                        }
+
+                        override fun onDataChange(p0: DataSnapshot) {
+                            Log.e("ref", ref.toString())
+                            Log.e("refgamepaly", refGameplay.toString())
+                            refGameplay.child("completed").setValue(true)
+                            refGameplay.child("active").setValue(false)
+
+                        }
+                    })
+                    dialog.dismiss();
+                    exitGameplay()
+                }
+            })
+        }
+        dialog.show()
+    }
     private fun saveGameProgress() {
         var mDatabase: FirebaseDatabase? = null
         mDatabase = FirebaseDatabase.getInstance()
@@ -109,6 +177,7 @@ class MyGameplayActivity : Fragment() {
 
     private fun exitGameplay() {
         MainActivity.activeGameplay = false
+        myActiveGameplay.active = false
         val intent = Intent(activity, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         activity?.startActivity(intent)

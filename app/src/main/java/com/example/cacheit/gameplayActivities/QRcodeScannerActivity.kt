@@ -32,6 +32,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_qr_code_scanner.*
+import java.util.*
+import kotlin.concurrent.schedule
 
 class QRcodeScannerActivity : AppCompatActivity(), RatingBar.OnRatingBarChangeListener {
 
@@ -115,7 +117,11 @@ class QRcodeScannerActivity : AppCompatActivity(), RatingBar.OnRatingBarChangeLi
             if (detections != null && detections.detectedItems.isNotEmpty()) {
                 val qrCodes: SparseArray<Barcode> = detections.detectedItems
                 val code = qrCodes.valueAt(0)
-                showEnding(code.displayValue) //TO-DO: add check if user within 100m radius of gameLat, gameLon
+
+                this@QRcodeScannerActivity.runOnUiThread(java.lang.Runnable {
+                    cameraSource.stop()
+                    showEnding(code.displayValue) //TO-DO: add check if user within 100m radius of gameLat, gameLon
+                });
                 //code.displayValue //gameId!!!!!!!!!!!!!!!!!!
             } else {
                 //nothing detected
@@ -125,119 +131,119 @@ class QRcodeScannerActivity : AppCompatActivity(), RatingBar.OnRatingBarChangeLi
     }
 
     private fun showEnding(gameId : String) {
+      val dialog = Dialog(this)
+      dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+      dialog.setCancelable(false)
+      dialog.setContentView(R.layout.layout_game_solved)
 
-        this@QRcodeScannerActivity.runOnUiThread(java.lang.Runnable {
-          val dialog = Dialog(this)
-          dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-          dialog.setCancelable(false)
-          dialog.setContentView(R.layout.layout_game_solved)
+      val btnSave = dialog.findViewById(R.id.btn_save) as Button
+      val name = dialog.findViewById(R.id.tv_game_details_name) as TextView
+      val totalTime = dialog.findViewById(R.id.tv_times_played) as TextView
+      val pointsEarned = dialog.findViewById(R.id.tv_times_solved) as TextView
+      val cbReportGame = dialog.findViewById(R.id.cb_report_game) as CheckBox
+      val ratingBar = dialog.findViewById(R.id.rb_game_rating) as RatingBar
+      var gameDeleted = false
 
-          val btnSave = dialog.findViewById(R.id.btn_save) as Button
-          val name = dialog.findViewById(R.id.tv_game_details_name) as TextView
-          val totalTime = dialog.findViewById(R.id.tv_times_played) as TextView
-          val pointsEarned = dialog.findViewById(R.id.tv_times_solved) as TextView
-          val cbReportGame = dialog.findViewById(R.id.cb_report_game) as CheckBox
-          val ratingBar = dialog.findViewById(R.id.rb_game_rating) as RatingBar
-          var gameDeleted = false
+      ratingBar.onRatingBarChangeListener = this
 
-          ratingBar.onRatingBarChangeListener = this
+      name.text = GameplayData.myActiveGameplay.name
+      totalTime.text = GameplayData.myActiveGameplay.totalTime
+      pointsEarned.text = calculatePoints()
+      dialog.show()
 
-          name.text = GameplayData.myActiveGameplay.name
-          totalTime.text = GameplayData.myActiveGameplay.totalTime
-          pointsEarned.text = calculatePoints()
+      btnSave!!.setOnClickListener { v ->
 
-          btnSave!!.setOnClickListener { v ->
+          //update rating and report game if checked
+          var mDatabase: FirebaseDatabase? = null
+          mDatabase = FirebaseDatabase.getInstance()
+          val ref = mDatabase!!.getReference("/Games/" + GameplayData.myActiveGameplay.gameId)
 
-              //report game if checked
-              if (cbReportGame.isChecked) {
-                  var mDatabase: FirebaseDatabase? = null
-                  mDatabase = FirebaseDatabase.getInstance()
-                  val ref = mDatabase!!.getReference("/Games/" + GameplayData.myActiveGameplay.gameId)
-
-                  var timesReported = 0
-                  ref.addListenerForSingleValueEvent(object : ValueEventListener {
-                      override fun onCancelled(p0: DatabaseError) {
-                          TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                      }
-
-                      override fun onDataChange(p0: DataSnapshot) {
-                          timesReported = p0.child("timesReported").value.toString().toInt()
-                          if (timesReported == 5) {
-                              ref.child("deleted").setValue(true) //if game reported 5 times, deleted
-                              gameDeleted = true
-                          }
-                          ref.child("timesReported").setValue((timesReported + 1))
-                      }
-                  })
+          var timesReported = 0
+          ref.addListenerForSingleValueEvent(object : ValueEventListener {
+              override fun onCancelled(p0: DatabaseError) {
+                  TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
               }
-              //
 
-              // increment player score
-              var mDatabase: FirebaseDatabase? = null
-              mDatabase = FirebaseDatabase.getInstance()
-              val refPlayer = mDatabase!!.getReference("/Users/" + GameplayData.myActiveGameplay.playerId)
-
-              refPlayer.addListenerForSingleValueEvent(object : ValueEventListener {
-                  override fun onCancelled(p0: DatabaseError) {
-                      TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                  }
-
-                  override fun onDataChange(p0: DataSnapshot) {
-                      val playerScore = p0.child("playerScore").value.toString().toInt() + calculatePoints().toFloat().toInt()
-                      refPlayer.child("playerScore").setValue(playerScore)
-                  }
-              })
-              //
-
-              // increment gameMaker score
-              val refOwner = mDatabase!!.getReference("/Users/" + GameplayData.myActiveGameplay.gameMakerId)
-
-              refOwner.addListenerForSingleValueEvent(object : ValueEventListener {
-                  override fun onCancelled(p0: DatabaseError) {
-                      TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                  }
-
-                  override fun onDataChange(p0: DataSnapshot) {
-                      if (!p0.hasChild(("playerScore"))) return
-                      val gameMakerPoints = p0.child("playerScore").value.toString().toInt()
-
-                      if (cbReportGame.isChecked) {
-                          refOwner.child("playerScore").setValue(gameMakerPoints - gameMakerPoints/10)
-                      } else {
-                          refOwner.child("playerScore").setValue(gameMakerPoints + (calculatePoints().toInt() * ratingScore) / 10)
+              override fun onDataChange(p0: DataSnapshot) {
+                  if (cbReportGame.isChecked) {
+                      timesReported = p0.child("timesReported").value.toString().toInt()
+                      if (timesReported == 5) {
+                          ref.child("deleted").setValue(true) //if game reported 5 times, deleted
+                          gameDeleted = true
                       }
+                      ref.child("timesReported").setValue((timesReported + 1))
                   }
-              })
-              //
+                  var ratingCount = p0.child("ratingCount").value.toString().toInt() + 1
+                  var rating = p0.child("rating").value.toString().toDouble()
+                  ref.child("ratingCount").setValue(ratingCount)
+                  ref.child("rating").setValue(rating/ratingCount)
+              }
+          })
 
-              // deactivate gameplay
-              val refGameplay = mDatabase!!.getReference("/Gameplays/" + GameplayData.myActiveGameplay.gameplayId)
+          //
 
-              refOwner.addListenerForSingleValueEvent(object : ValueEventListener {
-                  override fun onCancelled(p0: DatabaseError) {
-                      TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+          // increment player score
+          mDatabase = FirebaseDatabase.getInstance()
+          val refPlayer = mDatabase!!.getReference("/Users/" + GameplayData.myActiveGameplay.playerId)
+
+          refPlayer.addListenerForSingleValueEvent(object : ValueEventListener {
+              override fun onCancelled(p0: DatabaseError) {
+                  TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+              }
+
+              override fun onDataChange(p0: DataSnapshot) {
+                  val playerScore = p0.child("playerScore").value.toString().toInt() + calculatePoints().toFloat().toInt()
+                  refPlayer.child("playerScore").setValue(playerScore)
+              }
+          })
+          //
+
+          // increment gameMaker score
+          val refOwner = mDatabase!!.getReference("/Users/" + GameplayData.myActiveGameplay.gameMakerId)
+
+          refOwner.addListenerForSingleValueEvent(object : ValueEventListener {
+              override fun onCancelled(p0: DatabaseError) {
+                  TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+              }
+
+              override fun onDataChange(p0: DataSnapshot) {
+                  if (!p0.hasChild(("makerScore"))) return
+                  val gameMakerPoints = p0.child("playerScore").value.toString().toInt()
+
+                  if (cbReportGame.isChecked) {
+                      refOwner.child("makerScore").setValue(gameMakerPoints - gameMakerPoints/10)
+                  } else {
+                      refOwner.child("makerScore").setValue(gameMakerPoints + (calculatePoints().toInt() * ratingScore) / 10)
                   }
+              }
+          })
+          //
 
-                  override fun onDataChange(p0: DataSnapshot) {
-                      refGameplay.child("active").setValue(false)
-                      refGameplay.child("completed").setValue(true)
-                      MainActivity.activeGameplay = false
-                      GameplayData.myActiveGameplay.active = false
-                      refGameplay.child("totalTime").setValue(GameplayData.myActiveGameplay.totalTime)
-                  }
-              })
-              //
-              dialog.dismiss();
-              MainActivity.activeGameplay = false
-              GameplayData.myActiveGameplay.active = false
+          // deactivate gameplay
+          val refGameplay = mDatabase!!.getReference("/Gameplays/" + GameplayData.myActiveGameplay.gameplayId)
+
+          refGameplay.addListenerForSingleValueEvent(object : ValueEventListener {
+              override fun onCancelled(p0: DatabaseError) {
+                  TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+              }
+
+              override fun onDataChange(p0: DataSnapshot) {
+                  refGameplay.child("active").setValue(false)
+                  refGameplay.child("completed").setValue(true)
+                  MainActivity.activeGameplay = false
+                  GameplayData.myActiveGameplay.active = false
+                  refGameplay.child("totalTime").setValue(GameplayData.myActiveGameplay.totalTime)
+              }
+          })
+          dialog.dismiss()
+          MainActivity.activeGameplay = false
+          GameplayData.myActiveGameplay.active = false
+          Timer("SettingUp", false).schedule(2000) {
               exitScanner()
           }
 
-          dialog.show()
-
-    });
+      }
     }
-
 
     override fun onRatingChanged(p0: RatingBar?, p1: Float, p2: Boolean) {
         ratingScore = p1
@@ -268,6 +274,7 @@ class QRcodeScannerActivity : AppCompatActivity(), RatingBar.OnRatingBarChangeLi
     }
 
     private fun exitScanner() {
+        this@QRcodeScannerActivity.finish()
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         this.startActivity(intent)
