@@ -300,6 +300,9 @@ class CreateGameActivity : Fragment()  {
             dbGame?.child("hint")?.setValue(gameHint)
             dbGame?.child("lat")?.setValue(gameLat)
             dbGame?.child("lon")?.setValue(gameLon)
+            dbGame?.child("timesFinished")?.setValue("0")
+            dbGame?.child("timesClosed")?.setValue("0")
+            dbGame?.child("gameMakerPoints")?.setValue("0")
 
             if (imageUri == null) {
                 dbGame?.child("gameImg")

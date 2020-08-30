@@ -35,32 +35,6 @@
 
 
         <TextView
-            android:id="@+id/tv_times_played_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:fontFamily="@font/nunito"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:text="Total:"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_game_details_name" />
-
-        <TextView
-            android:id="@+id/tv_times_played"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:fontFamily="@font/nunito"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:text="64"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/tv_times_played_label"
-            app:layout_constraintTop_toBottomOf="@+id/tv_game_details_name" />
-
-        <TextView
             android:id="@+id/tv_times_solved_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -71,7 +45,7 @@
             android:text="Finished the game:"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_times_played_label" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_game_details_name" />
 
         <TextView
             android:id="@+id/tv_times_solved"
@@ -84,7 +58,7 @@
             android:text="30"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/tv_times_solved_label"
-            app:layout_constraintTop_toBottomOf="@+id/tv_times_played" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_game_details_name" />
 
         <TextView
             android:id="@+id/tv_times_quit_label"
@@ -113,6 +87,32 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_times_solved" />
 
         <TextView
+            android:id="@+id/tv_maker_points_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/nunito"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:text="Points earned:"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_times_quit_label" />
+
+        <TextView
+            android:id="@+id/tv_maker_points"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/nunito"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:text="30"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/tv_maker_points_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_times_quit" />
+
+        <TextView
             android:id="@+id/tv_rating_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -122,20 +122,20 @@
             android:text="Rating:"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_times_quit_label" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_maker_points_title" />
 
-        <TextView
-            android:id="@+id/tv_rating"
+        <RatingBar
+            android:id="@+id/rb_game_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:fontFamily="@font/nunito"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:text="50%"
-            android:textStyle="bold"
+            android:numStars="5"
+            android:stepSize="0.5"
+            android:layout_marginBottom="3dp"
+            android:layout_marginStart="5dp"
+            style="?android:attr/ratingBarStyleSmall"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_rating_label"
             app:layout_constraintStart_toEndOf="@+id/tv_rating_label"
-            app:layout_constraintTop_toBottomOf="@+id/tv_times_quit" />
+            />
 
         <Button
             android:id="@+id/btn_resend_email"
@@ -155,7 +155,7 @@
             android:text="Activate"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/btn_resend_email"
-            app:layout_constraintTop_toBottomOf="@+id/tv_rating" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_rating_label" />
 
         <ImageButton
             android:id="@+id/btn_close_details"

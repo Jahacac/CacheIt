@@ -87,10 +87,10 @@ class LoginActivity : AppCompatActivity() {
             showPasswordFlag = !showPasswordFlag
             if(showPasswordFlag) {
                 etPassword!!.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-                btn_show_password.setImageResource(R.drawable.ic_hidden_eye)
+                btn_show_password.setImageResource(R.drawable.ic_eye)
             } else {
                 etPassword!!.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-                btn_show_password.setImageResource(R.drawable.ic_eye)
+                btn_show_password.setImageResource(R.drawable.ic_eye_signup)
             }
             etPassword!!.typeface = tv_sign_up.typeface
             etPassword!!.setSelection(etPassword!!.text.length)

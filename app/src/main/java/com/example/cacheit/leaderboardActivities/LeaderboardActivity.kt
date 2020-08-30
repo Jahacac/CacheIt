@@ -29,6 +29,8 @@ class LeaderboardActivity : Fragment() {
     }
 
     private fun initialise() {
+        Log.e("best players", PlayerData.bestPlayersData.toString())
+        Log.e("best makers", PlayerData.bestMakersData.toString())
         initRecyclerViewPlayers()
         initRecyclerViewMakers()
         addDataSetPlayers()
@@ -36,8 +38,8 @@ class LeaderboardActivity : Fragment() {
     }
 
     private fun addDataSetMakers() {
-        Log.e(tag, "Fetched user's games: " + PlayerData.bestPlayersData)
-        makersLeaderboardRecyclerAdapter.submitList(PlayerData.bestPlayersData)
+        Log.e(tag, "Fetched user's games: " + PlayerData.bestMakersData)
+        makersLeaderboardRecyclerAdapter.submitList(PlayerData.bestMakersData)
     }
 
     private fun initRecyclerViewMakers() {

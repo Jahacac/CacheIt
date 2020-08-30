@@ -42,6 +42,7 @@ import com.example.cacheit.myGamesActivities.MyGamesActivity
 import com.example.cacheit.shared.GeofenceBroadcastReceiver
 import com.example.cacheit.shared.GeofenceHelper
 import com.example.cacheit.shared.LocationActivites.Companion.distance
+import com.example.cacheit.userProfileActivities.UserProfileActivity
 import com.firebase.geofire.GeoFire
 import com.firebase.geofire.GeoQuery
 import com.google.android.gms.common.api.ResolvableApiException
@@ -59,7 +60,6 @@ import com.karumi.dexter.listener.single.PermissionListener
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var toolbar: ActionBar
     lateinit var geofencingClient: GeofencingClient
     private lateinit var geofenceHelper: GeofenceHelper
 
@@ -101,7 +101,6 @@ class MainActivity : AppCompatActivity() {
         geofencingClient = LocationServices.getGeofencingClient(this)
         geofenceHelper = GeofenceHelper(this);
 
-        toolbar = supportActionBar!!
         val bottomNavigation: BottomNavigationView = findViewById(R.id.navigationView)
 
         bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
@@ -146,6 +145,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun addGeofence() {
 
+        Log.e("my active gameplay",  GameplayData.myActiveGameplay.toString())
         var gameLat = GameplayData.myActiveGameplay.lat.toDouble()
         var gameLon = GameplayData.myActiveGameplay.lon.toDouble()
         var myLat = currentLat?.toDouble()
@@ -205,7 +205,6 @@ class MainActivity : AppCompatActivity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_myGames -> {
-                toolbar.title = "My Games"
                 GamesData.myGamesData.clear()
                 GamesData.fetchMyGamesData(object : MyGamesDataCallback {
                     override fun onMyGamesDataCallback(myGroupsData: ArrayList<GameCard>) {
@@ -222,13 +221,11 @@ class MainActivity : AppCompatActivity() {
                         if (myGameplayData.active || activeGameplay) {
                             Log.e("gameplaydata", myGameplayData.active.toString())
                             Log.e("gameplaydata", activeGameplay.toString())
-                            toolbar.title = "Gameplay"
                                 Log.e("lala", "otvara se my gameplay")
                                 val myGameplayFragment = MyGameplayActivity.newInstance()
                                 openFragment(myGameplayFragment)
                                 addGeofence()
                         } else {
-                            toolbar.title = "Games"
                             GamesData.fetchAllGamesData(object : AllGamesDataCallback {
                                 override fun onAllGamesDataCallback(AllGamesData: java.util.ArrayList<GameCard>) {
                                     Log.e("lala", "otvara se my gameplay")
@@ -243,7 +240,6 @@ class MainActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_leaderboard -> {
-                toolbar.title = "Leaderboard"
                 PlayerData.bestMakersData.clear()
                 PlayerData.bestPlayersData.clear()
                 PlayerData.fetchBestPlayersData(object : MyPlayersDataCallback {
@@ -261,6 +257,8 @@ class MainActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_myProfile-> {
+                val userProfileFragment = UserProfileActivity.newInstance()
+                openFragment(userProfileFragment)
                 return@OnNavigationItemSelectedListener true
             }
         }

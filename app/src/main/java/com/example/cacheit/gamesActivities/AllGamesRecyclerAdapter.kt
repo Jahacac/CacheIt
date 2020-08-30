@@ -36,7 +36,6 @@ import com.example.cacheit.mainActivities.MainActivity.Companion.mainContext
 import kotlinx.android.synthetic.main.activity_main.navigationView
 import com.example.cacheit.myGamesActivities.MyGamesActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.internal.ContextUtils.getActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -156,6 +155,7 @@ class AllGamesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
                             dbGame?.child("gameMakerId")?.setValue(GameCard.ownerId)
                             dbGame?.child("difficulty")?.setValue(GameCard.difficulty)
                             dbGame?.child("initialDistance")?.setValue(GameCard.difficulty)
+                            dbGame?.child("gameImg")?.setValue(GameCard.gameImg)
                             flagExistsGameplay = true
                         }
                         if (!flagExistsGameplay) {
@@ -177,6 +177,7 @@ class AllGamesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
                             dbGame?.child("gameMakerId")?.setValue(GameCard.ownerId)
                             dbGame?.child("difficulty")?.setValue(GameCard.difficulty)
                             dbGame?.child("initialDistance")?.setValue(GameCard.difficulty)
+                            dbGame?.child("gameImg")?.setValue(GameCard.gameImg)
                         }
                     }
                 })

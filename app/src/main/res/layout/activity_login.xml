@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_login"
+    android:background="#5EAC82"
     tools:context=".authenticationActivities.LoginActivity">
 
 
@@ -22,39 +22,30 @@
         android:orientation="vertical"
         app:layout_constraintGuide_end="24dp" />
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/logo_icon"
-        android:layout_width="65dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="52dp"
-        android:src="@mipmap/ic_launcher"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="196dp"
-        android:layout_height="139dp"
-        android:layout_marginTop="80dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="70dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/title"
+        app:srcCompat="@drawable/qrcode"
         android:contentDescription="@string/app_name" />
 
     <EditText
         android:id="@+id/email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="240dp"
-        android:background="@drawable/et_bg"
+        android:layout_marginTop="270dp"
+        android:background="@drawable/login_btns"
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:padding="16dp"
         android:fontFamily="@font/nunito"
-        android:textColor="#FFFF"
+        android:textColor="#000000"
         app:layout_constraintEnd_toStartOf="@id/guideline_right"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/guideline_left"
@@ -65,11 +56,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="@drawable/et_bg"
+        android:background="@drawable/login_btns"
         android:fontFamily="@font/nunito"
         android:hint="Password"
         android:inputType="textPassword"
-        android:textColor="#FFFF"
+        android:textColor="#000000"
         android:padding="16dp"
         app:layout_constraintEnd_toStartOf="@id/guideline_right"
         app:layout_constraintStart_toStartOf="@id/guideline_left"
@@ -88,17 +79,16 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
         app:layout_constraintTop_toTopOf="@+id/password"
-        app:srcCompat="@drawable/ic_eye" />
+        app:srcCompat="@drawable/ic_eye_signup" />
 
     <Button
         android:id="@+id/btn_login"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/btn_bg"
+        android:background="@drawable/login_btn"
         android:text="Login"
+        android:textColor="#FFFFFF"
         android:fontFamily="@font/nunito_extrabold"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
@@ -110,39 +100,35 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Forgot password?"
+        android:textStyle="bold"
         android:fontFamily="@font/nunito"
-        android:textColor="#FFFF"
+        android:textSize="17dp"
+        android:textColor="#12603B"
         app:layout_constraintEnd_toStartOf="@id/guideline_right"
         app:layout_constraintStart_toStartOf="@id/guideline_left"
         app:layout_constraintTop_toBottomOf="@id/btn_login" />
 
-    <View
-        android:id="@+id/footer_line"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginBottom="50dp"
-        android:background="#fff"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tv_sign_up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sign up"
+        android:layout_marginBottom="50dp"
+        android:textStyle="bold"
+        android:textSize="17dp"
+        android:textColor="#12603B"
         android:fontFamily="@font/nunito"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/footer_line" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 
     <View
         android:id="@+id/line1"
         android:layout_width="120dp"
-        android:layout_height="1dp"
-        android:background="#FFFF"
+        android:layout_height="4dp"
+        android:background="@drawable/rounded_line"
         app:layout_constraintBottom_toTopOf="@id/tv_sign_up"
         app:layout_constraintEnd_toStartOf="@+id/or"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -154,8 +140,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="or"
-        android:textColor="#000000"
-        android:textSize="16sp"
+        android:textColor="#12603B"
+        android:textSize="18sp"
         android:fontFamily="@font/nunito"
         app:layout_constraintBottom_toBottomOf="@id/line1"
         app:layout_constraintEnd_toStartOf="@+id/line2"
@@ -165,8 +151,8 @@
     <View
         android:id="@+id/line2"
         android:layout_width="120dp"
-        android:layout_height="1dp"
-        android:background="#FFFFFF"
+        android:layout_height="4dp"
+        android:background="@drawable/rounded_line"
         app:layout_constraintBottom_toBottomOf="@id/or"
         app:layout_constraintEnd_toEndOf="@id/guideline_right"
         app:layout_constraintStart_toEndOf="@id/or"

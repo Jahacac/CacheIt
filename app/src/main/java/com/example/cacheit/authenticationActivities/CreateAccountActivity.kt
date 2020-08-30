@@ -108,10 +108,10 @@ class CreateAccountActivity : AppCompatActivity() {
             showPasswordFlag = !showPasswordFlag
             if(showPasswordFlag) {
                 etPassword!!.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-                btn_show_password.setImageResource(R.drawable.ic_hidden_eye)
+                btn_show_password.setImageResource(R.drawable.ic_eye)
             } else {
                 etPassword!!.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-                btn_show_password.setImageResource(R.drawable.ic_eye)
+                btn_show_password.setImageResource(R.drawable.ic_eye_signup)
             }
             etPassword!!.typeface = signInHere.typeface
             etPassword!!.setSelection(etPassword!!.text.length)
@@ -121,10 +121,10 @@ class CreateAccountActivity : AppCompatActivity() {
             showConfirmPasswordFlag = !showConfirmPasswordFlag
             if(showConfirmPasswordFlag) {
                 etConfirmPassword!!.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-                btn_show_confirm_password.setImageResource(R.drawable.ic_hidden_eye)
+                btn_show_confirm_password.setImageResource(R.drawable.ic_eye)
             } else {
                 etConfirmPassword!!.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-                btn_show_confirm_password.setImageResource(R.drawable.ic_eye)
+                btn_show_confirm_password.setImageResource(R.drawable.ic_eye_signup)
             }
             etConfirmPassword!!.typeface = signInHere.typeface
             etConfirmPassword!!.setSelection(etConfirmPassword!!.text.length)

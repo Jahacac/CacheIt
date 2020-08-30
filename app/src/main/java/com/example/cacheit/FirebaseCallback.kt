@@ -29,3 +29,7 @@ interface MyPlayersDataCallback {
 interface MyMakersDataCallback {
     fun onMyMakersDataCallback(MyMakersDataCallback: ArrayList<PlayerCard>)
 }
+
+interface MyCompletedGameplayDataCallback {
+    fun onMyCompletedGameplayDataCallback(MyCompletedGameplayData: ArrayList<GameplayCard>)
+}

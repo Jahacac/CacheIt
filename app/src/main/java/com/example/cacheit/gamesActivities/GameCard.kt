@@ -14,5 +14,8 @@ data class GameCard (
     var deleted: Boolean,           // game deleted (true, false) -> cannot be recovered!
     var timesReported: String,
     var lat: String,       // 3 reports result in game being deactivated
-    var lon: String
+    var lon: String,
+    var timesFinished: String,
+    var timesClosed: String,
+    var gameMakerPoints: String
     )

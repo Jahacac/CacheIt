@@ -17,5 +17,6 @@ data class GameplayCard (
     var hint: String = "",
     var gameMakerId: String = "",
     var difficulty: String = "",
-    var initialDistance: String = ""
+    var initialDistance: String = "",
+    var gameImg: String = ""
 )

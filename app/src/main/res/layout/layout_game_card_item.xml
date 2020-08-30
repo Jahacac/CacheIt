@@ -23,8 +23,8 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            app:civ_border_color="#FFFFFF"
-            app:civ_border_width="0.5dp"
+            app:civ_border_color="#131468"
+            app:civ_border_width="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -43,17 +43,13 @@
             app:layout_constraintStart_toEndOf="@+id/img_game_card"
             app:layout_constraintTop_toTopOf="parent" />
 
-
-        <TextView
-            android:id="@+id/tv_status"
+        <ImageButton
+            android:id="@+id/btn_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:fontFamily="@font/nunito"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:text="Status"
-            android:textStyle="bold"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/live"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btn_settings"
             app:layout_constraintTop_toTopOf="parent" />
@@ -68,19 +64,18 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btn_delete"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_settings" />
+            app:srcCompat="@drawable/settings" />
 
         <ImageButton
             android:id="@+id/btn_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
             android:layout_marginEnd="10dp"
             android:background="#00FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_close" />
+            app:layout_constraintTop_toTopOf="@+id/btn_settings"
+            app:srcCompat="@drawable/bin" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageView3"

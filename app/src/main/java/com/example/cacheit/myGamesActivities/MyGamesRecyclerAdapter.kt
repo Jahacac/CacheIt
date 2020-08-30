@@ -9,10 +9,13 @@ import android.os.AsyncTask
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -71,7 +74,7 @@ class MyGamesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         private val gameImage = itemView.img_game_card
         private val gameName = itemView.tv_game_card_name
-        private val tvStatus = itemView.tv_status
+        private val btnStatus = itemView.btn_status
         private val btnSettings = itemView.btn_settings
         private val btnDelete = itemView.btn_delete
 
@@ -79,11 +82,9 @@ class MyGamesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             gameName.text = GameCard.name
 
             if (GameCard.active) {
-                tvStatus.text = "Active"
-                tvStatus.setTextColor(Color.GREEN)
+                btnStatus.visibility = VISIBLE
             } else {
-                tvStatus.text = "Inactive"
-                tvStatus.setTextColor(Color.RED)
+                btnStatus.visibility = GONE
             }
 
             btnSettings!!.setOnClickListener { v ->
@@ -106,26 +107,29 @@ class MyGamesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 val btnToggleActivity = dialog.findViewById(R.id.btn_action) as Button
                 val btnResendEmail = dialog.findViewById(R.id.btn_resend_email) as Button
                 val name = dialog.findViewById(R.id.tv_game_details_name) as TextView
-                val total = dialog.findViewById(R.id.tv_times_played) as TextView
                 val finished = dialog.findViewById(R.id.tv_times_solved) as TextView
                 val canceled = dialog.findViewById(R.id.tv_times_quit) as TextView
-                val rating = dialog.findViewById(R.id.tv_rating) as TextView
+                val rating = dialog.findViewById(R.id.rb_game_rating) as RatingBar
+                val points = dialog.findViewById(R.id.tv_maker_points) as TextView
 
                 name.text = GameCard.name
+                rating.rating = GameCard.rating.toFloat();
+
+                finished.text = GameCard.timesFinished
+                canceled.text = GameCard.timesClosed
+                points.text = GameCard.gameMakerPoints
 
                 if (GameCard.active) { btnToggleActivity.text = "Deactivate" } else { btnToggleActivity.text = "Activate" }
 
                 btnToggleActivity!!.setOnClickListener { v ->
                     if (GameCard.active) {
                         btnToggleActivity.text = "Activate"
-                        tvStatus.text = "Inactive"
-                        tvStatus.setTextColor(Color.RED)
+                        btnStatus.visibility = GONE
                         ref.child("active").setValue(false)
                         GameCard.active = false
                     } else {
                         btnToggleActivity.text = "Deactivate"
-                        tvStatus.text = "Active"
-                        tvStatus.setTextColor(Color.GREEN)
+                        btnStatus.visibility = VISIBLE
                         ref.child("active").setValue(true)
                         GameCard.active = true
                     }
