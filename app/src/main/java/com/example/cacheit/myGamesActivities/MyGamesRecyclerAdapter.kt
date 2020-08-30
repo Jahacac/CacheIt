@@ -23,8 +23,10 @@ import com.example.cacheit.Firebase
 import com.example.cacheit.Firebase.Companion.databaseUsers
 import com.example.cacheit.MailingConfig.GMailSender
 import com.example.cacheit.MailingConfig.SendEmail
+import com.example.cacheit.MyGamesDataCallback
 import com.example.cacheit.R
 import com.example.cacheit.gamesActivities.GameCard
+import com.example.cacheit.gamesActivities.GamesData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -40,13 +42,20 @@ import kotlin.concurrent.thread
 class MyGamesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var items: List<GameCard> = ArrayList()
+    private var mListener: OnItemClickListener? = null
 
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        mListener = listener
+    }
+
+    interface OnItemClickListener {
+        fun onDeleteGameClick(position: Int)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         return MyGamesViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.layout_game_card_item, parent, false),
-            parent.context
+            LayoutInflater.from(parent.context).inflate(R.layout.layout_game_card_item, parent, false), mListener
         )
     }
 
@@ -69,7 +78,7 @@ class MyGamesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     class MyGamesViewHolder constructor(
         itemView: View,
-        parentContext: Context
+        private val listener: OnItemClickListener?
     ): RecyclerView.ViewHolder(itemView) {
 
         private val gameImage = itemView.img_game_card
@@ -181,6 +190,10 @@ class MyGamesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                         mDatabase = FirebaseDatabase.getInstance()
                         val ref = mDatabase!!.getReference("/Games/" + GameCard.id)
                         ref.child("deleted").setValue(true)
+                        Log.e("my games", GamesData.myGamesData.toString())
+                        Log.e("adapter position", adapterPosition.toString())
+                        GamesData.myGamesData.removeAt(adapterPosition);
+                        listener?.onDeleteGameClick(adapterPosition)
                     }
 
                 val alert = dialogBuilder.create()

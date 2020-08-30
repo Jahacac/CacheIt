@@ -187,7 +187,7 @@ class QRcodeScannerActivity : AppCompatActivity(), RatingBar.OnRatingBarChangeLi
                   var rating = p0.child("rating").value.toString().toFloat().toInt() + ratingBar.rating
                   var finishedCount = p0.child("timesFinished").value.toString().toInt() + 1
                   ref.child("ratingCount").setValue(ratingCount)
-                  ref.child("rating").setValue(rating/ratingCount)
+                  ref.child("rating").setValue(rating/2)
                   ref.child("timesFinished").setValue(finishedCount)
 
               }

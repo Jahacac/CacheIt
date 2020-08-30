@@ -14,7 +14,7 @@
         android:id="@+id/game_card_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF">
+        android:background="#ECFFF5">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_game_card"

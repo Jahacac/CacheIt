@@ -9,58 +9,73 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="0dp"
-        android:background="@drawable/round_container">
+        android:layout_marginHorizontal="5dp"
+        >
 
-        <TextView
-            android:id="@+id/tv_players"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginStart="60dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="5dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="5dp" />
+
+        <Button
+            android:id="@+id/btn_players"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/select_btn"
             android:text="Players"
-            android:textAllCaps="true"
-            android:textColor="#000000"
-            android:textSize="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/nunito_extrabold"
+            app:layout_constraintEnd_toStartOf="@+id/btn_game_makers"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_game_makers"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/btn_game_makers"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="40dp"
-            android:gravity="bottom"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/unselect_btn"
             android:text="Game Makers"
-            android:textAllCaps="true"
-            android:textColor="#000000"
-            android:textSize="20dp"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:textColor="#131468"
+            android:fontFamily="@font/nunito_extrabold"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+            app:layout_constraintStart_toEndOf="@+id/btn_players"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_players"
-            android:layout_width="205dp"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_players" />
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+            app:layout_constraintTop_toBottomOf="@+id/btn_players" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_game_makers"
-            android:layout_width="205dp"
+            android:layout_width="0dp"
             android:layout_height="0dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/rv_players"
-            app:layout_constraintTop_toBottomOf="@+id/tv_players" />
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+            app:layout_constraintTop_toBottomOf="@+id/btn_players" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

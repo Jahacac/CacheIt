@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#5EAC82"
+    android:background="#5CA17C"
     tools:context=".authenticationActivities.LoginActivity">
 
 
@@ -32,14 +32,14 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/qrcode"
+        app:srcCompat="@drawable/qrcode_new"
         android:contentDescription="@string/app_name" />
 
     <EditText
         android:id="@+id/email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="270dp"
+        android:layout_marginTop="255dp"
         android:background="@drawable/login_btns"
         android:hint="Email"
         android:inputType="textEmailAddress"
@@ -128,6 +128,7 @@
         android:id="@+id/line1"
         android:layout_width="120dp"
         android:layout_height="4dp"
+        android:layout_marginStart="20dp"
         android:background="@drawable/rounded_line"
         app:layout_constraintBottom_toTopOf="@id/tv_sign_up"
         app:layout_constraintEnd_toStartOf="@+id/or"
@@ -152,6 +153,7 @@
         android:id="@+id/line2"
         android:layout_width="120dp"
         android:layout_height="4dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/rounded_line"
         app:layout_constraintBottom_toBottomOf="@id/or"
         app:layout_constraintEnd_toEndOf="@id/guideline_right"
@@ -161,8 +163,8 @@
     <ProgressBar
         android:id="@+id/login_progress_bar"
         style="?android:attr/progressBarStyle"
-        android:layout_width="40dp"
-        android:layout_height="37dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/or"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"

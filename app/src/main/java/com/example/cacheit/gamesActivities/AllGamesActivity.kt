@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,11 +24,12 @@ class AllGamesActivity : Fragment() {
     private lateinit var allGamesRecyclerAdapter: AllGamesRecyclerAdapter
     private var root: View? = null
     private var rvAllGames: RecyclerView? = null
+    private var notFound: TextView? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         root = inflater.inflate(R.layout.activity_all_games, container, false)
         super.onCreate(savedInstanceState)
-
+        notFound = root?.findViewById<TextView>(R.id.not_found) as TextView
         initialise()
         return root
 
@@ -40,7 +42,10 @@ class AllGamesActivity : Fragment() {
 
 
     private fun addDataSet() {
-        Log.e(tag, "Fetched user's games: " + GamesData.myGamesData)
+        if (GamesData.allGamesData.isEmpty()) {
+            notFound?.visibility = View.VISIBLE
+        }
+        Log.e(tag, "Fetched user's games: " + GamesData.allGamesData)
         allGamesRecyclerAdapter.submitList(GamesData.allGamesData)
     }
 

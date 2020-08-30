@@ -42,10 +42,10 @@
         <activity android:name=".gameplayActivities.QRcodeScannerActivity" />
         <activity android:name=".myGamesActivities.MyGamesActivity" />
         <activity android:name=".gamesActivities.AllGamesActivity" />
-        <activity android:name=".mainActivities.MainActivity" />
+        <activity android:name=".mainActivities.MainActivity" android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".leaderboardActivities.LeaderboardActivity" />
         <activity android:name=".userProfileActivities.UserProfileActivity" />
-
+        <activity android:name=".userProfileActivities.UserProfileSettingsActivity" />
     </application>
 
 </manifest>

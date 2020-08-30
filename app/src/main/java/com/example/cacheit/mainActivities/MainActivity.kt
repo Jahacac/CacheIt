@@ -102,7 +102,6 @@ class MainActivity : AppCompatActivity() {
         geofenceHelper = GeofenceHelper(this);
 
         val bottomNavigation: BottomNavigationView = findViewById(R.id.navigationView)
-
         bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         bottomNavigation.selectedItemId = R.id.navigation_games;
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED) {

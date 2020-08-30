@@ -9,6 +9,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardElevation="0dp"
     app:cardCornerRadius="20dp"
+    android:background="@drawable/login_btns"
     app:cardPreventCornerOverlap="false"
     >
 
@@ -179,8 +180,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:text="Save my Review"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
+            android:background="@drawable/login_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rb_game_rating" />
 

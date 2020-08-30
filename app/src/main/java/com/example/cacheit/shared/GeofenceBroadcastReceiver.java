@@ -42,15 +42,15 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
         switch (transitionType) {
             case Geofence.GEOFENCE_TRANSITION_ENTER:
                 Toast.makeText(context, "GEOFENCE_TRANSITION_ENTER", Toast.LENGTH_SHORT).show();
-                notificationHelper.sendHighPriorityNotification("GEOFENCE_TRANSITION_ENTER", "", MainActivity.class);
+                notificationHelper.sendHighPriorityNotification("Entered the game finish zone", "Awesome! You are on the right path!", MainActivity.class);
                 break;
             case Geofence.GEOFENCE_TRANSITION_DWELL:
                 Toast.makeText(context, "GEOFENCE_TRANSITION_DWELL", Toast.LENGTH_SHORT).show();
-                notificationHelper.sendHighPriorityNotification("GEOFENCE_TRANSITION_DWELL", "", MainActivity.class);
+                notificationHelper.sendHighPriorityNotification("Inside the game finish zone", "Keep going, you are in the game finish zone.", MainActivity.class);
                 break;
             case Geofence.GEOFENCE_TRANSITION_EXIT:
                 Toast.makeText(context, "GEOFENCE_TRANSITION_EXIT", Toast.LENGTH_SHORT).show();
-                notificationHelper.sendHighPriorityNotification("GEOFENCE_TRANSITION_EXIT", "", MainActivity.class);
+                notificationHelper.sendHighPriorityNotification("Exited the game finish zone", "Go back! You are going in the wrong direction :-(", MainActivity.class);
                 break;
         }
 

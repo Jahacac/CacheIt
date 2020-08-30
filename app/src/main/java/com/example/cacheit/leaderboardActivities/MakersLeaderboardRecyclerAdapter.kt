@@ -46,7 +46,7 @@ class MakersLeaderboardRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewH
         fun bind(PlayerCard: PlayerCard) {
             playerUsername.text = PlayerCard.username
             playerPoints.text = PlayerCard.makerScore.toString()
-            playerRank.text = PlayerCard.order.toString()
+            playerRank.text = PlayerCard.order.toString() + "."
 
             Glide.with(itemView.context)
                 //.applyDefaultRequestOptions(requestOptions)

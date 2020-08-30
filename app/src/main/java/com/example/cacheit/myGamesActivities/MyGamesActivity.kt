@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
@@ -24,11 +25,13 @@ class MyGamesActivity : Fragment() {
     private var root: View? = null
     private var btnCreateNewGame: Button? = null
     private var rvMyGames: RecyclerView? = null
+    private var notFound: TextView? = null
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         root = inflater.inflate(R.layout.activity_my_games, container, false)
         super.onCreate(savedInstanceState)
-
+        notFound = root?.findViewById<TextView>(R.id.not_found) as TextView
         initialise()
         return root
     }
@@ -49,7 +52,15 @@ class MyGamesActivity : Fragment() {
 
     private fun addDataSet() {
         Log.e(tag, "Fetched user's games: " + GamesData.myGamesData)
+        if (GamesData.myGamesData.isEmpty()) {
+            notFound?.visibility = VISIBLE
+        }
         myGamesRecyclerAdapter.submitList(GamesData.myGamesData)
+        myGamesRecyclerAdapter.setOnItemClickListener(object: MyGamesRecyclerAdapter.OnItemClickListener {
+            override fun onDeleteGameClick(position: Int) {
+                myGamesRecyclerAdapter.notifyItemRemoved(position)
+            }
+        })
     }
 
     private fun initRecyclerView() {

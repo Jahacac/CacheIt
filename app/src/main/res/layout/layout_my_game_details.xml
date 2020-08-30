@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:id="@+id/cv_game_details"
+    android:background="@drawable/login_btns"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardElevation="0dp"
     app:cardCornerRadius="20dp"
@@ -16,6 +17,8 @@
         android:id="@+id/game_details_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="10dp"
+        android:paddingBottom="10dp"
         android:background="#FFFFFF">
 
 
@@ -25,6 +28,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:layout_marginTop="20dp"
+            android:textAllCaps="true"
             android:fontFamily="@font/nunito"
             android:textColor="#000000"
             android:textSize="20sp"
@@ -141,20 +145,28 @@
             android:id="@+id/btn_resend_email"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Resend QR code"
+            android:layout_marginTop="20dp"
+            android:text="Send QR code"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/login_btn"
+            android:layout_marginHorizontal="10dp"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_action"
             app:layout_constraintTop_toBottomOf="@+id/tv_rating_label" />
 
         <Button
             android:id="@+id/btn_action"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:text="Activate"
+            android:textColor="#FFFFFF"
+            android:layout_marginHorizontal="10dp"
+            android:background="@drawable/login_btn"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/btn_resend_email"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_rating_label" />
 
         <ImageButton
@@ -162,7 +174,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:layout_marginEnd="10dp"
             android:background="#00FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

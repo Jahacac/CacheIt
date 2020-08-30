@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/my_gameplay"
+    android:background="@drawable/gameplay"
     tools:context=".gameplayActivities.MyGameplayActivity">
 
     <androidx.constraintlayout.widget.Guideline
@@ -26,20 +27,21 @@
         android:id="@+id/tv_gameName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="10dp"
         android:gravity="bottom"
         android:text="STOPWATCH"
         android:textAllCaps="true"
-        android:textColor="#000000"
-        android:textSize="20dp"
+        android:textColor="#2F7335"
+        android:textSize="25dp"
+        android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/logo" />
 
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="180dp"
         android:layout_marginTop="81dp"
         android:contentDescription="logo"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -64,27 +66,29 @@
 
     <Chronometer
         android:id="@+id/c_meter"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:layout_marginStart="68dp"
-        android:layout_marginTop="256dp"
-        android:layout_marginEnd="68dp"
-        android:layout_marginBottom="28dp"
+        android:layout_margin="5dp"
+        android:paddingHorizontal="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="10dp"
+        android:background="@drawable/login_btn"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#1383A5"
+        android:textColor="#FFFFFF"
         android:textSize="50dp"
+        android:textStyle="bold"
         android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+         />
 
     <ScrollView
         android:id="@+id/ScrollView01"
-        android:layout_width="match_parent"
+        android:layout_width="370dp"
         android:layout_height="110dp"
-        android:layout_margin="25dp"
+        android:layout_margin="5dp"
+        android:layout_marginHorizontal="25dp"
         app:layout_constraintLeft_toLeftOf="@+id/guideline_left"
         app:layout_constraintRight_toRightOf="@+id/guideline_right"
         app:layout_constraintTop_toBottomOf="@+id/c_meter"
@@ -94,11 +98,16 @@
             android:id="@+id/tv_gameHint"
             android:gravity="bottom"
             android:text="STOPWATCH"
+            android:paddingHorizontal="10dp"
+            android:paddingTop="10dp"
+            android:layout_marginTop="10dp"
+            android:paddingBottom="10dp"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="wrap_content"
             android:textAllCaps="true"
+            android:background="@drawable/login_btn"
             android:textColor="@android:color/background_light"
-            android:textSize="20sp"
+            android:textSize="15sp"
             app:layout_constraintLeft_toLeftOf="@+id/guideline_left"
             app:layout_constraintRight_toRightOf="@+id/guideline_right"
              />
@@ -111,21 +120,21 @@
         android:id="@+id/btn_camera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginTop="8dp"
         android:background="@android:color/transparent"
         android:contentDescription=""
         app:layout_constraintBottom_toTopOf="@+id/btn_stop"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@drawable/ic_linked_camera" /> <!--stop-->
+        app:srcCompat="@drawable/camera" /> <!--stop-->
 
     <ImageButton
         android:id="@+id/btn_stop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="100dp"
+        android:layout_marginTop="0dp"
         android:background="@android:color/transparent"
         android:contentDescription=""
         app:layout_constraintBottom_toBottomOf="parent"
@@ -137,7 +146,7 @@
         android:id="@+id/btn_report"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="100dp"
         android:layout_marginTop="8dp"
         android:layout_marginStart="50dp"
         android:visibility="gone"
@@ -145,7 +154,7 @@
         android:contentDescription=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:srcCompat="@drawable/ic_report_problem" /> <!--stop-->
+        app:srcCompat="@drawable/warn" /> <!--stop-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
