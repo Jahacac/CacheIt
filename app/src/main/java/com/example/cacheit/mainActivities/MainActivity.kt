@@ -5,30 +5,23 @@ import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.Intent
-import android.content.IntentSender
-import com.google.android.gms.location.Geofence
-import com.google.android.gms.location.GeofencingClient
-import com.google.android.gms.location.GeofencingRequest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import android.widget.Toast
-import androidx.appcompat.app.ActionBar
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import android.provider.Settings
-import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.cacheit.*
 import com.example.cacheit.R
-import com.example.cacheit.createGameActivities.CreateGameActivity
 import com.example.cacheit.gameplayActivities.GameplayCard
 import com.example.cacheit.gameplayActivities.GameplayData
 import com.example.cacheit.gameplayActivities.MyGameplayActivity
@@ -39,36 +32,35 @@ import com.example.cacheit.leaderboardActivities.LeaderboardActivity
 import com.example.cacheit.leaderboardActivities.PlayerCard
 import com.example.cacheit.leaderboardActivities.PlayerData
 import com.example.cacheit.myGamesActivities.MyGamesActivity
-import com.example.cacheit.shared.GeofenceBroadcastReceiver
-import com.example.cacheit.shared.GeofenceHelper
 import com.example.cacheit.shared.LocationActivites.Companion.distance
 import com.example.cacheit.userProfileActivities.UserProfileActivity
 import com.firebase.geofire.GeoFire
+import com.firebase.geofire.GeoLocation
 import com.firebase.geofire.GeoQuery
-import com.google.android.gms.common.api.ResolvableApiException
+import com.firebase.geofire.GeoQueryEventListener
 import com.google.android.gms.location.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionDeniedResponse
-import com.karumi.dexter.listener.PermissionGrantedResponse
-import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.single.PermissionListener
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var geofencingClient: GeofencingClient
-    private lateinit var geofenceHelper: GeofenceHelper
 
+    private var geoQuery: GeoQuery? = null
+    private lateinit var geoFire: GeoFire
+    private var mainHandler: Handler? =  null
     // current user location
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     private var GEOFENCE_ID = "SOME_GEOFENCE_ID";
     private var FINE_LOCATION_ACCESS_REQUEST_CODE: Int = 10001;
     private var BACKGROUND_LOCATION_ACCESS_REQUEST_CODE: Int = 10002;
+    private var notifyCounter: Int = 0
+    private var keepGoingFlag: Boolean = false
 
     companion object {
         var activeGameplay = false;
@@ -78,17 +70,13 @@ class MainActivity : AppCompatActivity() {
         var currentLon: Double? = null;
     }
 
-    private val geofencePendingIntent: PendingIntent by lazy {
-        val intent = Intent(this, GeofenceBroadcastReceiver::class.java)
-        // We use FLAG_UPDATE_CURRENT so that we get the same pending intent back when calling
-        // addGeofences() and removeGeofences().
-        PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-    }
-
     private val runningQOrLater = android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        createNotificationChannel()
+
         foregroundAndBackgroundLocationPermissionApproved()
 
         // initialize FusedLocationProviderClient
@@ -99,7 +87,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         geofencingClient = LocationServices.getGeofencingClient(this)
-        geofenceHelper = GeofenceHelper(this);
 
         val bottomNavigation: BottomNavigationView = findViewById(R.id.navigationView)
         bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
@@ -150,37 +137,84 @@ class MainActivity : AppCompatActivity() {
         var myLat = currentLat?.toDouble()
         var myLon = currentLon?.toDouble()
 
-        var distance = (distance(myLat!!, myLon!!, gameLat, gameLon) * 1000).toFloat()
+        var distance = ((distance(myLat!!, myLon!!, gameLat, gameLon)).toDouble() / 2) //km
 
-        //Log.e("lat", myLat.toString())
-        //Log.e("lon", myLon.toString())
-        //Log.e("gamelat", gameLat.toString())
-        //Log.e("gamelon", gameLon.toString())
-        //Log.e("distancehalf", distanceHalf.toString())
+        val userId = Firebase.auth!!.currentUser!!.uid
+        //setting up GeoFire
+        geoFire = GeoFire(FirebaseDatabase.getInstance().getReference("MyLocation/${userId}"))
+        geoFire.setLocation("you", GeoLocation(myLat, myLon))
+//        if(geoQuery != null) {
+//            geoQuery!!.removeAllListeners()
+//        }
 
-        var geofence = geofenceHelper.getGeofence(GEOFENCE_ID, myLat, myLon, distance / 2, Geofence.GEOFENCE_TRANSITION_DWELL or Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT);
-        var geofencingRequest = geofenceHelper.getGeofencingRequest(geofence);
-        var pendingIntent = geofenceHelper.pendingIntent;
+        if(geoQuery == null) geoQuery = geoFire.queryAtLocation(GeoLocation(gameLat, gameLon), distance) //km
 
-        geofencingClient.addGeofences(geofencingRequest, pendingIntent)?.run {
-            addOnCompleteListener {
-                    addOnSuccessListener {
-                        Toast.makeText(this@MainActivity, "Geofence active!",
-                            Toast.LENGTH_SHORT)
-                            .show()
-                        Log.e("Add Geofence", geofence.requestId)
-                    }
-                    addOnFailureListener {
-                        Toast.makeText(this@MainActivity, "Geofence not active!",
-                            Toast.LENGTH_SHORT).show()
-                        if ((it.message != null)) {
-                            Log.w("Add Geofence", it.message)
-                        }
-                    }
-                }
+        Log.e("active gameplay name", GameplayData.myActiveGameplay.name)
+        Log.e("lat", myLat.toString())
+        Log.e("lon", myLon.toString())
+        Log.e("gamelat", gameLat.toString())
+        Log.e("gamelon", gameLon.toString())
+        Log.e("distancehalf", distance.toString())
+
+        geoQuery!!.addGeoQueryEventListener(object : GeoQueryEventListener {
+            override fun onGeoQueryReady() {
+                Log.e("geo wuery ready ", " sam")
             }
-        }
+            override fun onKeyEntered(key: String?, location: GeoLocation?) {
+                Log.e("ulazim", " sam")
+                sendNotification("Entered the game finish zone", "Awesome! You are on the right path!")
+                keepGoingFlag = true
 
+            }
+
+            override fun onKeyMoved(key: String?, location: GeoLocation?) {
+                Log.e("krecem se ", " sam")
+                if (keepGoingFlag) sendNotification("Moving in the game finish zone", "Keep going! The game finish is near.")
+                keepGoingFlag = false
+            }
+
+            override fun onKeyExited(key: String?) {
+                Log.e("izlazim ", " sam")
+                sendNotification("Exited the game finish zone", "Go back! You are on the wrong path!")
+            }
+
+            override fun onGeoQueryError(error: DatabaseError?) {
+                Log.e("error ", " sam")
+                sendNotification("ERROR", "I'm sorry... We can't track your progress, try again later.")
+            }
+        })
+    }
+
+    private fun sendNotification(title: String, body: String) {
+        var builder = NotificationCompat.Builder(this, "1")
+            .setSmallIcon(R.drawable.chest)
+            .setContentTitle(title)
+            .setContentText(body)
+            .setPriority(NotificationCompat.PRIORITY_MAX)
+
+        with(NotificationManagerCompat.from(this)) {
+            // notificationId is a unique int for each notification that you must define
+            notify(notifyCounter, builder.build())
+            notifyCounter++
+        }
+    }
+
+    private fun createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "1"
+            val descriptionText = "RMA notifications"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel("1", name, importance).apply {
+                description = descriptionText
+            }
+            // Register the channel with the system
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
 
     @TargetApi(29)
     private fun foregroundAndBackgroundLocationPermissionApproved(): Boolean {
@@ -214,20 +248,25 @@ class MainActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_games -> {
+                GameplayData.myActiveGameplay = GameplayCard()
                 GameplayData.fetchMyActiveGameplayData(object : MyActiveGameplayDataCallback {
                     override fun onMyActiveGameplayDataCallback(myGameplayData: GameplayCard) {
-                        Log.e("fetching gameplay", myGameplayData.toString())
                         if (myGameplayData.active || activeGameplay) {
-                            Log.e("gameplaydata", myGameplayData.active.toString())
-                            Log.e("gameplaydata", activeGameplay.toString())
-                                Log.e("lala", "otvara se my gameplay")
                                 val myGameplayFragment = MyGameplayActivity.newInstance()
                                 openFragment(myGameplayFragment)
                                 addGeofence()
+                                mainHandler = Handler(Looper.getMainLooper())
+                                mainHandler!!.post(object : Runnable {
+                                    override fun run() {
+                                        getLastLocation()
+                                        geoFire.setLocation("you", GeoLocation(currentLat!!, currentLon!!))
+                                        mainHandler!!.postDelayed(this, 5000) //every 5 seconds
+                                    }
+                                })
                         } else {
+                            if (!activeGameplay && mainHandler != null)  mainHandler!!.removeCallbacksAndMessages(null);
                             GamesData.fetchAllGamesData(object : AllGamesDataCallback {
                                 override fun onAllGamesDataCallback(AllGamesData: java.util.ArrayList<GameCard>) {
-                                    Log.e("lala", "otvara se my gameplay")
                                     val gamesFragment = AllGamesActivity.newInstance()
                                     openFragment(gamesFragment)
                                 }
@@ -245,7 +284,6 @@ class MainActivity : AppCompatActivity() {
                     override fun onMyPlayersDataCallback(MyPlayersDataCallback: java.util.ArrayList<PlayerCard>) {
                         PlayerData.fetchBestMakersData(object : MyMakersDataCallback {
                             override fun onMyMakersDataCallback(MyMakersDataCallback: java.util.ArrayList<PlayerCard>) {
-                                Log.e("lala", "otvara se my leaderbaord")
                                 val leaderboardFragment = LeaderboardActivity.newInstance()
                                 openFragment(leaderboardFragment)
                             }

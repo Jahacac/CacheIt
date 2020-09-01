@@ -4,9 +4,7 @@ import android.Manifest
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.media.Rating
 import android.os.Bundle
-import android.util.Log
 import android.util.SparseArray
 import android.view.SurfaceHolder
 import android.view.Window
@@ -19,21 +17,16 @@ import com.example.cacheit.R
 import com.example.cacheit.mainActivities.MainActivity
 import com.example.cacheit.mainActivities.MainActivity.Companion.currentLat
 import com.example.cacheit.mainActivities.MainActivity.Companion.currentLon
-import com.example.cacheit.shared.GeofenceHelper
 import com.example.cacheit.shared.LocationActivites.Companion.distance
-import com.google.android.gms.location.LocationServices
 import com.google.android.gms.vision.CameraSource
 import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.gms.vision.barcode.BarcodeDetector
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_qr_code_scanner.*
-import java.util.*
-import kotlin.concurrent.schedule
 
 class QRcodeScannerActivity : AppCompatActivity(), RatingBar.OnRatingBarChangeListener {
 

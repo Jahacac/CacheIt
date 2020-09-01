@@ -75,11 +75,9 @@ class GameplayData {
                         val currentDate = sdf.format(Date())
 
                         children.forEach {
-                            if (it.child("playerId").value.toString() == userId) {
+                            if (it.child("playerId").value.toString() == userId && !it.child("completed").value.toString().toBoolean()) {
                                 Log.e("lala ", "igram staru igru")
                                 Log.e("saved gameplay: ", "match found!")
-                                it.ref.child("active").setValue(true)
-                                it.ref.child("dateStarted").setValue(currentDate)
                                 mySavedGameplay.add(
                                     GameplayCard(
                                         it.child("gameplayId").value.toString(),

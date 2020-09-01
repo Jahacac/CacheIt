@@ -123,16 +123,21 @@ class AllGamesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
                 val currentDate = sdf.format(Date())
 
                 var flagExistsGameplay = false;
-                GameplayData.mySavedGameplay.clear()
                 GameplayData.fetchMySavedGameplayData(object : MySavedGameplayDataCallback {
                     override fun onMySavedGameplayDataCallback(MySavedGameplayData: java.util.ArrayList<GameplayCard>) {
                         if (GameplayData.mySavedGameplay.size > 0) {
                             for (savedGame in GameplayData.mySavedGameplay) {
+                                Log.e("saved game id", savedGame.gameId)
+                                Log.e("current game id", GameCard.id)
                                 if (savedGame.gameId == GameCard.id) {
-                                    savedGame.active = true
-                                    savedGame.dateStarted = currentDate
+                                    val ref = mDatabase!!.getReference("/Gameplays/${savedGame.gameplayId}")
+                                    ref?.child("active")?.setValue(true)
+                                    ref?.child("dateStarted")?.setValue(currentDate)
+                                    GameplayData.mySavedGameplay.clear()
+                                    GameplayData.myActiveGameplay
                                     GameplayData.myActiveGameplay = savedGame
                                     flagExistsGameplay = true
+                                    Log.e("game", "added")
                                     break
                                 }
                             }
@@ -188,7 +193,6 @@ class AllGamesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
                         @SuppressLint("RestrictedApi")
                         override fun onMyActiveGameplayDataCallback(myGameplayData: GameplayCard) {
                             Log.e("lala", "switching activity from rec adapter")
-                            activeGameplay = true
                             val intent = Intent(itemView.context, MainActivity::class.java)
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                             itemView.context.startActivity(intent)
@@ -226,4 +230,5 @@ class AllGamesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
     }
 
 }
+
 

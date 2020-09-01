@@ -83,7 +83,6 @@ class MyGameplayActivity : Fragment() {
                 .setCancelable(true)
                 .setPositiveButton("Ok") { _: DialogInterface, _: Int ->
                     saveGameProgress()
-                    exitGameplay()
                 }
 
             val alert = dialogBuilder.create()
@@ -173,13 +172,15 @@ class MyGameplayActivity : Fragment() {
 
         var gamePlayedSeconds = (SystemClock.elapsedRealtime() - meter!!.base)/1000 + GameplayData.myActiveGameplay.totalTime.toFloat();
         ref.child("totalTime").setValue(gamePlayedSeconds.toString())
+        exitGameplay()
     }
 
     private fun exitGameplay() {
         MainActivity.activeGameplay = false
-        myActiveGameplay.active = false
+        myActiveGameplay = GameplayCard()
         val intent = Intent(activity, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        getFragmentManager()?.beginTransaction()?.remove(this)?.commitAllowingStateLoss();
         activity?.startActivity(intent)
     }
 
