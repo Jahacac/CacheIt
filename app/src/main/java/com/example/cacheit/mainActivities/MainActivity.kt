@@ -160,7 +160,7 @@ class MainActivity : AppCompatActivity() {
 
         var geofence = geofenceHelper.getGeofence(GEOFENCE_ID, myLat, myLon, distance / 2, Geofence.GEOFENCE_TRANSITION_DWELL or Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT);
         var geofencingRequest = geofenceHelper.getGeofencingRequest(geofence);
-        var pendingIntent = geofenceHelper.getPendingIntent();
+        var pendingIntent = geofenceHelper.pendingIntent;
 
         geofencingClient.addGeofences(geofencingRequest, pendingIntent)?.run {
             addOnCompleteListener {

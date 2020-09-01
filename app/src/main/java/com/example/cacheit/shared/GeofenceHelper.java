@@ -30,6 +30,7 @@ public class GeofenceHelper extends ContextWrapper {
 
     public Geofence getGeofence(String ID, Double lat, Double lon, float radius, int transitionTypes) {
         Log.e("radius", String.valueOf(radius));
+        Log.e("transitionTypes", String.valueOf(transitionTypes));
         return new Geofence.Builder()
                 .setCircularRegion(lat, lon, radius)
                 .setRequestId(ID)
@@ -47,6 +48,7 @@ public class GeofenceHelper extends ContextWrapper {
         Log.e("context in helper ", this.toString());
 
         Intent intent = new Intent(this, GeofenceBroadcastReceiver.class);
+        intent.setAction("broadcastReceiverAction"); // Add this line
         pendingIntent = PendingIntent.getBroadcast(this, 2607, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         Log.e("pending intent ", pendingIntent.toString());
         return pendingIntent;

@@ -69,9 +69,10 @@
         <Button
             android:id="@+id/btn_startGame"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:text="Start game !"
             android:textColor="#FFFFFF"
+            android:textSize="10dp"
             android:layout_marginEnd="10dp"
             android:background="@drawable/select_btn"
             android:paddingHorizontal="10dp"
