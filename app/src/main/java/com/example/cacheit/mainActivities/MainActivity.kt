@@ -150,7 +150,7 @@ class MainActivity : AppCompatActivity() {
         var myLat = currentLat?.toDouble()
         var myLon = currentLon?.toDouble()
 
-        var distanceHalf = (distance(myLat!!, myLon!!, gameLat, gameLon) * 1000).toFloat()
+        var distance = (distance(myLat!!, myLon!!, gameLat, gameLon) * 1000).toFloat()
 
         //Log.e("lat", myLat.toString())
         //Log.e("lon", myLon.toString())
@@ -158,7 +158,7 @@ class MainActivity : AppCompatActivity() {
         //Log.e("gamelon", gameLon.toString())
         //Log.e("distancehalf", distanceHalf.toString())
 
-        var geofence = geofenceHelper.getGeofence(GEOFENCE_ID, gameLat, gameLon, distanceHalf, Geofence.GEOFENCE_TRANSITION_DWELL);
+        var geofence = geofenceHelper.getGeofence(GEOFENCE_ID, myLat, myLon, distance / 2, Geofence.GEOFENCE_TRANSITION_DWELL or Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT);
         var geofencingRequest = geofenceHelper.getGeofencingRequest(geofence);
         var pendingIntent = geofenceHelper.getPendingIntent();
 

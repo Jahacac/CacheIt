@@ -29,6 +29,7 @@ public class GeofenceHelper extends ContextWrapper {
     }
 
     public Geofence getGeofence(String ID, Double lat, Double lon, float radius, int transitionTypes) {
+        Log.e("radius", String.valueOf(radius));
         return new Geofence.Builder()
                 .setCircularRegion(lat, lon, radius)
                 .setRequestId(ID)
@@ -39,6 +40,7 @@ public class GeofenceHelper extends ContextWrapper {
     }
 
     public PendingIntent getPendingIntent() {
+
         if (pendingIntent != null) {
             return pendingIntent;
         }

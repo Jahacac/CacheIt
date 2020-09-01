@@ -279,5 +279,5 @@ class CreateAccountActivity : AppCompatActivity() {
     }
 }
 
-class User(val id: String, val email: String, val fullName: String, val username: String, val profilePhotoUrl: String)
+class User(val id: String, val email: String, val fullName: String, val username: String, val profilePhotoUrl: String, val playerScore: String = "", val makerScore: String = "")
 
