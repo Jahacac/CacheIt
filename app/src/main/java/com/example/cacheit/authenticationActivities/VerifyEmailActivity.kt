@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.Toast
 import com.example.cacheit.Firebase
 import com.example.cacheit.R
+import com.example.cacheit.mainActivities.MainActivity
 
 class VerifyEmailActivity : AppCompatActivity() {
     private val tag = "VerifyEmailActivity"
@@ -34,9 +35,9 @@ class VerifyEmailActivity : AppCompatActivity() {
             currentUserAuth.addOnSuccessListener {
                 val user = Firebase.auth!!.currentUser
                 if(user?.isEmailVerified!!) {
-                    /*val intent = Intent(this@VerifyEmailActivity, MapsActivity::class.java)
+                    val intent = Intent(this@VerifyEmailActivity, MainActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                    startActivity(intent)*/
+                    startActivity(intent)
                 }
                 else {
                     Log.d(tag, "Email not verified.")

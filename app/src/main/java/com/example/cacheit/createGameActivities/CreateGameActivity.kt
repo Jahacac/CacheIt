@@ -303,12 +303,15 @@ class CreateGameActivity : Fragment()  {
             dbGame?.child("timesFinished")?.setValue("0")
             dbGame?.child("timesClosed")?.setValue("0")
             dbGame?.child("gameMakerPoints")?.setValue("0")
+            dbGame?.child("timesReported")?.setValue("0")
 
             if (imageUri == null) {
                 dbGame?.child("gameImg")
                     ?.setValue("https://firebasestorage.googleapis.com/v0/b/cacheit-759ee.appspot.com/o/images%2Fblank_profile_photo.jpeg?alt=media&token=21494e7f-acf7-411f-86ad-70459f8a1ee7")
                 refreshCreateGame()
                 Toast.makeText(activity, "Game successfully created!", Toast.LENGTH_SHORT).show()
+                val myGamesFragment = MyGamesActivity.newInstance()
+                childFragmentManager.beginTransaction().replace(R.id.create_game_main,myGamesFragment).commit()
             } else {
                 uploadProfilePhotoToFirebaseStorage()
             }
@@ -346,6 +349,8 @@ class CreateGameActivity : Fragment()  {
                 Log.d(tag, "Saved profile photo to firebase database")
                 refreshCreateGame()
                 Toast.makeText(activity, "Game successfully created!", Toast.LENGTH_SHORT).show()
+                val myGamesFragment = MyGamesActivity.newInstance()
+                childFragmentManager.beginTransaction().replace(R.id.create_game_main,myGamesFragment).commit()
             }
             .addOnFailureListener {
                 Log.d(tag, "Failed to save profile photo firebase database")

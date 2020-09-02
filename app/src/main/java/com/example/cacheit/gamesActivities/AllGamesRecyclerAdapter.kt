@@ -32,9 +32,12 @@ import com.example.cacheit.gameplayActivities.MyGameplayActivity
 import com.example.cacheit.gamesActivities.GameCard
 import com.example.cacheit.mainActivities.MainActivity
 import com.example.cacheit.mainActivities.MainActivity.Companion.activeGameplay
+import com.example.cacheit.mainActivities.MainActivity.Companion.currentLat
+import com.example.cacheit.mainActivities.MainActivity.Companion.currentLon
 import com.example.cacheit.mainActivities.MainActivity.Companion.mainContext
 import kotlinx.android.synthetic.main.activity_main.navigationView
 import com.example.cacheit.myGamesActivities.MyGamesActivity
+import com.example.cacheit.shared.LocationActivites.Companion.distance
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -90,10 +93,12 @@ class AllGamesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
         private val gameName = itemView.tv_game_card_name
         private val btnStartGame = itemView.btn_startGame
         private val ratingStars = itemView.rb_game_rating
+        val difficulty = itemView.tv_game_card_difficulty
 
         fun bind(GameCard: GameCard) {
             gameName.text = GameCard.name
             ratingStars.rating = GameCard.rating.toFloat()
+            difficulty.text = GameCard.difficulty
 
             btnStartGame!!.setOnClickListener { v ->
                 var mDatabase: FirebaseDatabase? = null
@@ -114,9 +119,8 @@ class AllGamesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
                 val name = dialog.findViewById(R.id.tv_game_details_name) as TextView
                 val hintTitle = dialog.findViewById(R.id.tv_hint_title) as TextView
                 val hintTxt = dialog.findViewById(R.id.tv_hint_txt) as TextView
-                val distanceTitle = dialog.findViewById(R.id.tv_distance_txt) as TextView
-                val distanceTxt = dialog.findViewById(R.id.tv_distance_title) as TextView
-
+                val distanceTitle = dialog.findViewById(R.id.tv_distance_title) as TextView
+                val distanceTxt = dialog.findViewById(R.id.tv_distance_txt) as TextView
                 val btnCloseDetails = dialog.findViewById(R.id.btn_close_details) as ImageButton
 
                 val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
@@ -161,6 +165,7 @@ class AllGamesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
                             dbGame?.child("difficulty")?.setValue(GameCard.difficulty)
                             dbGame?.child("initialDistance")?.setValue(GameCard.difficulty)
                             dbGame?.child("gameImg")?.setValue(GameCard.gameImg)
+                            dbGame?.child("reported")?.setValue(false)
                             flagExistsGameplay = true
                         }
                         if (!flagExistsGameplay) {
@@ -183,6 +188,7 @@ class AllGamesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
                             dbGame?.child("difficulty")?.setValue(GameCard.difficulty)
                             dbGame?.child("initialDistance")?.setValue(GameCard.difficulty)
                             dbGame?.child("gameImg")?.setValue(GameCard.gameImg)
+                            dbGame?.child("reported")?.setValue(false)
                         }
                     }
                 })
@@ -210,9 +216,10 @@ class AllGamesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
                 }
 
                 if (GameCard.locationHint) {
+                    var distanceApprox = distance(currentLat!!, currentLon!!, GameCard.lat.toDouble(), GameCard.lon.toDouble()).toInt()
                     distanceTitle.visibility = View.VISIBLE
                     distanceTxt.visibility = View.VISIBLE
-                    distanceTxt.text = "3km" // TO-DO: izracunat approx. zracnu udaljenost do cilja (current lat lon, game lat lon)
+                    distanceTxt.text = distanceApprox.toString()
                 }
 
                 dialog.show()

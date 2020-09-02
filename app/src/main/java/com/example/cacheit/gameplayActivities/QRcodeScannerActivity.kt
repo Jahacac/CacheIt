@@ -111,12 +111,13 @@ class QRcodeScannerActivity : AppCompatActivity(), RatingBar.OnRatingBarChangeLi
                 val qrCodes: SparseArray<Barcode> = detections.detectedItems
                 val code = qrCodes.valueAt(0)
 
-                this@QRcodeScannerActivity.runOnUiThread(java.lang.Runnable {
-                    cameraSource.stop()
-                    detector.release()
-                    showEnding(code.displayValue) //TO-DO: add check if user within 100m radius of gameLat, gameLon
-                });
-                //code.displayValue //gameId!!!!!!!!!!!!!!!!!!
+                if (code.displayValue == GameplayData.myActiveGameplay.gameId) {
+                    this@QRcodeScannerActivity.runOnUiThread(java.lang.Runnable {
+                        cameraSource.stop()
+                        detector.release()
+                        showEnding(code.displayValue)
+                    });
+                }
             } else {
                 //nothing detected
             }
@@ -171,16 +172,20 @@ class QRcodeScannerActivity : AppCompatActivity(), RatingBar.OnRatingBarChangeLi
                   var makerPoints = p0.child("gameMakerPoints").value.toString().toInt()
 
                   if (cbReportGame.isChecked) {
-                      ref.child("gameMakerPoints").setValue(makerPoints - makerPoints/10)
+                      ref.child("gameMakerPoints").setValue((makerPoints - makerPoints/10).toInt())
                   } else {
-                      ref.child("gameMakerPoints").setValue(makerPoints + (calculatePoints().toFloat().toInt() * ratingScore) / 10)
+                      ref.child("gameMakerPoints").setValue((makerPoints + (calculatePoints().toFloat().toInt() * ratingScore) / 10).toInt())
                   }
 
 
                   var rating = p0.child("rating").value.toString().toFloat().toInt() + ratingBar.rating
                   var finishedCount = p0.child("timesFinished").value.toString().toInt() + 1
                   ref.child("ratingCount").setValue(ratingCount)
-                  ref.child("rating").setValue(rating/2)
+                  if (ratingCount == 1) {
+                      ref.child("rating").setValue(rating)
+                  } else {
+                      ref.child("rating").setValue(rating/2)
+                  }
                   ref.child("timesFinished").setValue(finishedCount)
 
               }
@@ -217,9 +222,9 @@ class QRcodeScannerActivity : AppCompatActivity(), RatingBar.OnRatingBarChangeLi
                   val gameMakerPoints = p0.child("playerScore").value.toString().toFloat().toInt()
 
                   if (cbReportGame.isChecked) {
-                      refOwner.child("makerScore").setValue(gameMakerPoints - gameMakerPoints/10)
+                      refOwner.child("makerScore").setValue((gameMakerPoints - gameMakerPoints/10).toInt())
                   } else {
-                      refOwner.child("makerScore").setValue(gameMakerPoints + (calculatePoints().toFloat().toInt() * ratingScore) / 10)
+                      refOwner.child("makerScore").setValue((gameMakerPoints + (calculatePoints().toFloat().toInt() * ratingScore) / 10).toInt())
                   }
               }
           })
@@ -234,12 +239,9 @@ class QRcodeScannerActivity : AppCompatActivity(), RatingBar.OnRatingBarChangeLi
               }
 
               override fun onDataChange(p0: DataSnapshot) {
-                  val points = p0.child("points").value.toString().toFloat().toInt()
-                  if (cbReportGame.isChecked) {
-                      refGameplay.child("points").setValue(points - points/10)
-                  } else {
-                      refGameplay.child("points").setValue(points + (calculatePoints().toFloat().toInt() * ratingScore) / 10)
-                  }
+
+                  refGameplay.child("points").setValue(calculatePoints().toFloat().toInt())
+
                   refGameplay.child("active").setValue(false)
                   refGameplay.child("completed").setValue(true)
                   MainActivity.activeGameplay = false

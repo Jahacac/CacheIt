@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_btns"
+    android:background="#2C8555"
     tools:context=".authenticationActivities.VerifyEmailActivity">
 
     <TextView
@@ -14,7 +14,7 @@
         android:layout_marginHorizontal="30dp"
         android:layout_marginTop="120dp"
         android:fontFamily="@font/nunito_bold"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:text="Email not verified. Please verify it to continue."
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,7 +31,7 @@
         android:fontFamily="@font/nunito_extrabold"
         android:padding="16dp"
         android:text="I have verified my email"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,7 +46,7 @@
         android:text="Enter your email and we\'ll send you a link to get back into your account."
         android:background="@drawable/btn_bg"
         android:fontFamily="@font/nunito_semibold"
-        android:textColor="#000000"
+        android:textColor="#74B88E"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

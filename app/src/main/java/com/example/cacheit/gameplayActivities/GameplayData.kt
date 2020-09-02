@@ -75,7 +75,7 @@ class GameplayData {
                         val currentDate = sdf.format(Date())
 
                         children.forEach {
-                            if (it.child("playerId").value.toString() == userId && !it.child("completed").value.toString().toBoolean()) {
+                            if (it.child("playerId").value.toString() == userId && !it.child("completed").value.toString().toBoolean() && !it.child("reported").value.toString().toBoolean()) {
                                 Log.e("lala ", "igram staru igru")
                                 Log.e("saved gameplay: ", "match found!")
                                 mySavedGameplay.add(
@@ -119,7 +119,7 @@ class GameplayData {
                         val children = p0.children
                         val userId = Firebase.auth!!.currentUser!!.uid
                         children.forEach {
-                            if (it.child("playerId").value.toString() == userId && it.child("completed").value.toString().toBoolean()) {
+                            if (it.child("playerId").value.toString() == userId && it.child("completed").value.toString().toBoolean()  && !it.child("reported").value.toString().toBoolean()) {
                                 Log.e("if ownerId: ", "match found!")
                                 myCompletedGameplays.add(
                                     GameplayCard(

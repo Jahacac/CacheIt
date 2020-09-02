@@ -35,8 +35,8 @@ class PlayerData {
                                 PlayerCard(
                                     it.child("username").value.toString(),
                                     it.child("profilePhotoUrl").value.toString(),
-                                    it.child("playerScore").value.toString().toInt(),
-                                    it.child("makerScore").value.toString().toInt(),
+                                    it.child("playerScore").value.toString().toDouble().toInt(),
+                                    it.child("makerScore").value.toString().toDouble().toInt(),
                                     p0.children.count() - counter
                                 )
                             )
@@ -67,8 +67,8 @@ class PlayerData {
                                 PlayerCard(
                                     it.child("username").value.toString(),
                                     it.child("profilePhotoUrl").value.toString(),
-                                    it.child("playerScore").value.toString().toInt(),
-                                    it.child("makerScore").value.toString().toInt(),
+                                    it.child("playerScore").value.toString().toDouble().toInt(),
+                                    it.child("makerScore").value.toString().toDouble().toInt(),
                                     p0.children.count() - counter
                                 )
                             )

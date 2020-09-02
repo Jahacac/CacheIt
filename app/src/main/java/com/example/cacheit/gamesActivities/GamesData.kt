@@ -8,6 +8,9 @@ import com.example.cacheit.MyCompletedGameplayDataCallback
 import com.example.cacheit.MyGamesDataCallback
 import com.example.cacheit.gameplayActivities.GameplayCard
 import com.example.cacheit.gameplayActivities.GameplayData
+import com.example.cacheit.mainActivities.MainActivity.Companion.currentLat
+import com.example.cacheit.mainActivities.MainActivity.Companion.currentLon
+import com.example.cacheit.shared.LocationActivites.Companion.distance
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -86,6 +89,7 @@ class GamesData {
                                 val userId = Firebase.auth!!.currentUser!!.uid
                                 children.forEach {
                                     if (it.child("ownerId").value.toString() != userId && !it.child("deleted").value.toString().toBoolean() && it.child("active").value.toString().toBoolean() && !completedIds.contains(it.child("id").value.toString())) {
+                                        if (distance(currentLat!!, currentLon!!, it.child("lat").value.toString().toDouble(), it.child("lon").value.toString().toDouble()) > 10.0) return
                                         Log.e("if ownerId: ", "match found!")
                                         allGamesData.add(
                                             GameCard (

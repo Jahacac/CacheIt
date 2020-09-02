@@ -12,12 +12,10 @@ import android.view.View
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.Button
-import android.widget.Chronometer
+import android.widget.*
 import android.widget.Chronometer.OnChronometerTickListener
-import android.widget.ImageButton
-import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.cacheit.R
 import com.example.cacheit.createGameActivities.CreateGameActivity
 import com.example.cacheit.gameplayActivities.GameplayData.Companion.myActiveGameplay
@@ -27,6 +25,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import de.hdodenhof.circleimageview.CircleImageView
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -38,6 +37,7 @@ class MyGameplayActivity : Fragment() {
     private var tvGameHint: TextView? = null
     private var btnStop: ImageButton? = null
     private var btnCamera: ImageButton? = null
+    private var img: CircleImageView? = null
     private var meter: Chronometer? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -69,6 +69,12 @@ class MyGameplayActivity : Fragment() {
 
         tvGameName = root?.findViewById<TextView>(R.id.tv_gameName) as TextView
         tvGameHint = root?.findViewById<TextView>(R.id.tv_gameHint) as TextView
+        img = root?.findViewById<CircleImageView>(R.id.logo) as CircleImageView
+
+        Glide.with(requireActivity())
+            //.applyDefaultRequestOptions(requestOptions)
+            .load(GameplayData.myActiveGameplay.gameImg)
+            .into(img!!)
 
         btnStop = root?.findViewById<ImageButton>(R.id.btn_stop) as ImageButton
         btnCamera = root?.findViewById<ImageButton>(R.id.btn_camera) as ImageButton
@@ -131,6 +137,8 @@ class MyGameplayActivity : Fragment() {
 
             val refGameplay = mDatabase!!.getReference("/Gameplays/" + myActiveGameplay.gameplayId)
             var timesReported = 0
+            refGameplay.child("reported").setValue(true)
+
             ref.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -157,6 +165,7 @@ class MyGameplayActivity : Fragment() {
                         }
                     })
                     dialog.dismiss();
+                    Toast.makeText(activity, "Game reported!", Toast.LENGTH_SHORT).show()
                     exitGameplay()
                 }
             })

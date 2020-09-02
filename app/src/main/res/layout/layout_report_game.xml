@@ -42,7 +42,7 @@
             android:layout_marginTop="10dp"
             android:fontFamily="@font/nunito"
             android:textColor="#000000"
-            android:textSize="20sp"
+            android:textSize="17dp"
             android:text="Stuck on this game for too long?\n If you feel that this game is any way inapproapriate or invalid, please report it."
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"

@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
@@ -40,6 +42,7 @@ class UserProfileActivity : Fragment() {
     private var makerPoints: TextView? = null
     private var userImg: CircleImageView? = null
     private var logout: TextView? = null
+    private var noGames: TextView? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         root = inflater.inflate(R.layout.activity_user_profile, container, false)
@@ -59,7 +62,7 @@ class UserProfileActivity : Fragment() {
             playerPoints = root?.findViewById<TextView>(R.id.tv_player_points) as TextView
             makerPoints = root?.findViewById<TextView>(R.id.tv_maker_points) as TextView
             logout = root?.findViewById<TextView>(R.id.tv_logout) as TextView
-
+            noGames = root?.findViewById<TextView>(R.id.tv_no_games_completed) as TextView
 
             var mDatabase: FirebaseDatabase? = null
             mDatabase = FirebaseDatabase.getInstance()
@@ -103,6 +106,10 @@ class UserProfileActivity : Fragment() {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 startActivity(intent)
             }
+            if (GameplayData.myCompletedGameplays.size == 0) {
+                noGames?.visibility = VISIBLE
+                rvCompletedGames?.visibility = GONE
+            }
 
         }
 
@@ -110,6 +117,7 @@ class UserProfileActivity : Fragment() {
         private fun addDataSet() {
             Log.e(tag, "Fetched user's games: " + GameplayData.myCompletedGameplays)
             myCompletedGamesRecyclerAdapter.submitList(GameplayData.myCompletedGameplays)
+            Log.e("completed games", GameplayData.myCompletedGameplays.size.toString())
         }
 
         private fun initRecyclerView() {

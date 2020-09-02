@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:clipToPadding="false"
     android:id="@+id/user_profile"
-    android:background="@drawable/bg_login"
+    android:background="#88CFA9"
     tools:context=".userProfileActivities.UserProfileActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -173,10 +173,32 @@
             app:layout_constraintStart_toStartOf="@+id/guideline_left"
             app:layout_constraintTop_toBottomOf="@+id/tv_maker_points_title" />
 
+        <TextView
+            android:id="@+id/tv_no_games_completed"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="15dp"
+            android:text="You haven't played any games yet!"
+            android:textColor="#FAFEFF"
+            android:textSize="13dp"
+            android:gravity="center"
+            android:visibility="gone"
+            android:background="@drawable/my_profile_games"
+            android:fontFamily="@font/nunito_semibold"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+            app:layout_constraintTop_toBottomOf="@+id/tv_games_played_title" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_my_completed_games"
             android:layout_width="0dp"
-            android:layout_height="240dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
+            android:paddingBottom="10dp"
+            android:maxHeight="230dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/my_profile_games"
             app:layout_constraintEnd_toStartOf="@+id/guideline_right"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline_left"

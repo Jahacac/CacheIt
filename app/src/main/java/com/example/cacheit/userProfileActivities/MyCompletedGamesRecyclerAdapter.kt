@@ -62,7 +62,7 @@ class MyCompletedGamesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHo
     class MyCompletedGamesViewHolder constructor(
         itemView: View
     ): RecyclerView.ViewHolder(itemView) {
-        private val gameImage = itemView.img_game_card
+        private val gameImage = itemView.img_completed_game_card
         private val gameName = itemView.tv_game_card_name
         private val pointsEarned = itemView.tv_points_earned
         private val difficulty = itemView.tv_difficulty
