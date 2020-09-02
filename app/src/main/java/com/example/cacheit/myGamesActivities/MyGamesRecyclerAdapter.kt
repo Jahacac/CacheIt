@@ -13,10 +13,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.RatingBar
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cacheit.Firebase
@@ -173,6 +170,8 @@ class MyGamesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                                     file
                                 );
                                 myWebFetch.execute();
+                                Toast.makeText(itemView.context, "Email sent!", Toast.LENGTH_SHORT)
+                                    .show()
                             }
 
                         })
